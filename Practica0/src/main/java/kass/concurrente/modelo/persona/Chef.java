@@ -1,5 +1,12 @@
 package kass.concurrente.modelo.persona;
 
-public class Chef extends Persona{
-    
+import kass.concurrente.modelo.cuchillo.Cuchillo;
+
+public class Chef extends Persona{ 
+    private Cuchillo cu;
+   
+    public Chef(String nombre, Integer edad, Cuchillo cu) {
+        super(nombre, edad);
+        this.cu = cu;
+    }
 }
