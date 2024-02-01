@@ -56,7 +56,7 @@ public class Platillo {
         if (this.agregados.isEmpty())
             return costo;
 
-        Double total = costo;
+        Double total = 0.;
         for (Producto p : agregados)
             total += p.getCosto();
         
