@@ -8,20 +8,20 @@ import java.util.List;
  * @author Kassandra Mirael
  */
 public class Platillo {
-    private List<Producto> agregados;
+    private List<Producto> requeridos;
     private Double costo;
     private Integer tiempoPrep;
     private String nombre; 
 
     public Platillo() {
-        this.agregados  = new ArrayList<>();
+        this.requeridos  = new ArrayList<>();
         this.costo      = 0.;
         this.tiempoPrep = 0;
         this.nombre     = "Placeholder";
     }
 
     public Platillo(String nombre, Integer tiempoPrep) {
-        this.agregados  = new ArrayList<>();
+        this.requeridos  = new ArrayList<>();
         this.costo      = 0.;
         this.tiempoPrep = tiempoPrep;
         this.nombre     = nombre;
@@ -29,7 +29,7 @@ public class Platillo {
 
     public Platillo(List<Producto> productos, Double costo, 
                     Integer tiempoPrep, String nombre) {
-        this.agregados  = productos;
+        this.requeridos  = productos;
         this.costo      = costo;
         this.tiempoPrep = tiempoPrep;
         this.nombre     = nombre;
@@ -44,7 +44,7 @@ public class Platillo {
     }
 
     public List<Producto> getProductosRequeridos() {
-        return this.getProductosRequeridos();
+        return this.requeridos;
     }
 
     /**
@@ -53,11 +53,11 @@ public class Platillo {
      * @return El precio de la suma de cada item utilizado
      */
     public Double calculaPrecio(){
-        if (this.agregados.isEmpty())
+        if (this.requeridos.isEmpty())
             return costo;
 
         Double total = 0.;
-        for (Producto p : agregados)
+        for (Producto p : requeridos)
             total += p.getCosto();
         
         return total;
