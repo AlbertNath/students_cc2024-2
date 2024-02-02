@@ -1,9 +1,11 @@
 package kass.concurrente.modelo.persona;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import kass.concurrente.modelo.cuchillo.Cuchillo;
 import kass.concurrente.modelo.producto.Platillo;
+import kass.concurrente.modelo.producto.ProductoInventario;
 
 public class Chef extends Persona{ 
     /** Cuchillo utilitario del chef */
@@ -23,18 +25,34 @@ public class Chef extends Persona{
         this.cu = cu;
     }
 
-    public void atiende(Persona cliente, List<Platillo> orden) {
-        if(orden.isEmpty())
+    public void atiende(Persona cliente, 
+                        List<ProductoInventario> stock) {
+        List<Platillo> orden = cliente.getOrden();
+        if(orden.isEmpty()){
             System.out.println("Orden vacía\nSiguiente cliente");
+            return;
+        }
 
-        System.out.println("Se ateiende la orden de: " + 
+        System.out.println("Se ateiende la orden de: \t" + 
                            cliente.getNombre());
         Double costoTotal = 0.;
         Double tiempoTotal = 0.;
         for (Platillo p : orden) {
+            List<String> requeridos = p.getProductosRequeridos()
+                                        .stream().map(x -> x.getNombre())
+                                        .collect(Collectors.toList());
+
+            for (String req : requeridos) {
+                ProductoInventario pi = stock.stream().filter(x -> x.getNombre()
+                                             .equals(req)).findFirst().orElse(null);
+                if (pi != null)
+                    pi.consumir();
+            }
+
             costoTotal += p.calculaPrecio();
             tiempoTotal += p.getTiempoCoccion();
         }
-        
+        System.err.println("Total de orden: " + costoTotal);
+        System.err.println("Tiempo transcurrido: " + (tiempoTotal - cu.corta()));
     }
 }

@@ -1,12 +1,17 @@
 package kass.concurrente.modelo.persona;
 
+import java.util.List;
+
+import kass.concurrente.modelo.producto.Platillo;
+
 /**
  * Clase que modela una persona
  * @author Kassandra Mirael
  */
 public class Persona {
-    private String nombre;
-    private Integer edad;
+    protected String nombre;
+    protected Integer edad;
+    private List<Platillo> orden;
 
     public Persona(String nombre, Integer edad) {
         this.nombre = nombre;
@@ -20,4 +25,12 @@ public class Persona {
     public Integer getEdad() {
         return this.edad;
     } 
+
+    public void setOrden(List<Platillo> orden) {
+        this.orden = orden;
+    }
+
+    public List<Platillo> getOrden() {
+        return this.orden;
+    }
 }
