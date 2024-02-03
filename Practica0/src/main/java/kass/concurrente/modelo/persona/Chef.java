@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import kass.concurrente.modelo.cuchillo.Cuchillo;
+import kass.concurrente.modelo.extra.Agregado;
+import kass.concurrente.modelo.extra.Crema;
+import kass.concurrente.modelo.extra.Queso;
 import kass.concurrente.modelo.producto.Platillo;
 import kass.concurrente.modelo.producto.ProductoInventario;
 
@@ -48,8 +51,17 @@ public class Chef extends Persona{
                 if (pi != null)
                     pi.consumir();
             }
+            Agregado serv = null;
+            switch (p.getNombre()) {
+                case "Enchiladas":
+                    serv = new Agregado(new Queso(new Crema(p)));
+                    break;
+            
+                default:
+                    break;
+            }
 
-            costoTotal += p.calculaPrecio();
+            costoTotal += (serv == null)? p.calculaPrecio() : serv.agrega();
             tiempoTotal += p.getTiempoCoccion();
         }
         System.err.println("Total de orden: " + costoTotal);

@@ -30,7 +30,8 @@ public class ProductoInventario extends Producto{
                 Thread.sleep(retraso);
                 this.unidades += 2;
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Error al traer ingrediente");
+                System.exit(1);
             }
         this.unidades--;
     }

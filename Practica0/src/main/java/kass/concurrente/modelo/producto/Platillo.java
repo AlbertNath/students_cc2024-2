@@ -3,11 +3,13 @@ package kass.concurrente.modelo.producto;
 import java.util.ArrayList;
 import java.util.List;
 
+import kass.concurrente.modelo.extra.Extra;
+
 /**
  * Clase que modela un platillo
  * @author Kassandra Mirael
  */
-public class Platillo {
+public class Platillo implements Extra {
     private List<Producto> requeridos;
     private Double costo;
     private Integer tiempoPrep;
@@ -62,5 +64,9 @@ public class Platillo {
         
         return total;
     }
-    
+
+    @Override
+    public Double agrega() {
+        return this.calculaPrecio();
+    }
 }

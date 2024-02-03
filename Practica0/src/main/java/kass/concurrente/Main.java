@@ -2,7 +2,9 @@ package kass.concurrente;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator; 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import kass.concurrente.modelo.cuchillo.CuchilloJapones;
@@ -20,19 +22,30 @@ import kass.concurrente.modelo.producto.ProductoInventario;
  * @version 1.0
  */
 public class Main {
+    public static void annadeProductos(List<Producto> lista, boolean esInventario) {
+        List<String> prods = Arrays.asList("Pollo", "Tomate", "Cebolla", "Pasta", "Ajo", "Arroz", "Tortilla");
+        Iterator<Double> prodsCosts = Arrays.asList(12., 5., 7., 5., 2., 3., 5.).iterator();
+        Random rnd = new Random();
+        if (esInventario) {
+            for (String p : prods) 
+                lista.add(new ProductoInventario(p, prodsCosts.next(), rnd.nextInt(3)+1));
+        } else {
+            for (String p : prods) 
+                lista.add(new Producto(p, prodsCosts.next()));
+        }
+    }
+
     public static void main(String[] args) {
-        ArrayList<ProductoInventario> bodega;
-        ArrayList<Platillo> menu;
-        bodega = new ArrayList<>(); 
-        bodega.add(new ProductoInventario("Pollo", 12., 0));
-        bodega.add(new ProductoInventario("Tomate", 5., 10));
-        bodega.add(new ProductoInventario("Cebolla", 7., 10));
-        bodega.add(new ProductoInventario("Pasta", 5., 7));
-        bodega.add(new ProductoInventario("Ajo", 2., 4));
-        bodega.add(new ProductoInventario("Arroz", 3., 3));
-        bodega.add(new ProductoInventario("Tortilla", 5., 6));
-       
-        menu = new ArrayList<>(); 
+        ArrayList<Producto> cocina = new ArrayList<>();
+        ArrayList<Producto> bodega = new ArrayList<>();
+        ArrayList<Platillo> menu   = new ArrayList<>();
+        annadeProductos(cocina, false);
+        annadeProductos(bodega, true);
+        
+        List<ProductoInventario> inventario;
+        inventario = bodega.stream().map(x -> (ProductoInventario) x)
+                           .collect(Collectors.toList());
+
         List<Producto> receta = Arrays.asList(
         bodega.get(0), bodega.get(1), bodega.get(2),
         bodega.get(4), bodega.get(6));
@@ -46,6 +59,6 @@ public class Main {
         Persona comensal1 = new Persona("Albert", 22);
         comensal1.setOrden(menu);
 
-        ch1.atiende(comensal1, bodega);
+        ch1.atiende(comensal1, inventario);
     }
 }
