@@ -33,10 +33,22 @@ public class Producto {
         this.costo          = costo;
     }
     
+    /**
+     * Método para obtener la representación en 
+     * cadena de los agregados al platillo.
+     * @return la cadena con la secuancia de 
+     * agregados al platillo base.
+     */
     public String getNombre() {
         return this.nombreProducto; 
     }
 
+    /**
+     * Método para agregar un extra, según 
+     * su costo y el del platillo al que se 
+     * le agrega.
+     * @return el costo agregado.
+     */
     public Double getCosto() {
         return this.costo;
     }

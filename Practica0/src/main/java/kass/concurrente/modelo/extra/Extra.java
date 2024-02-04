@@ -1,20 +1,27 @@
 package kass.concurrente.modelo.extra;
-
-import kass.concurrente.modelo.producto.Platillo;
-
 /**
+ * <p>
  * Interfaz que implementa el patrón de diseño 
  * <code>Decorator</code> para añadir extras a 
  * los platillos como toppings o adicionales.
+ * </p>
  * @author Albert
  */
 public interface Extra {
+
+    /**
+     * Método para obtener la representación en 
+     * cadena de los agregados al platillo.
+     * @return la cadena con la secuancia de 
+     * agregados al platillo base.
+     */
+    public String getNombre();
+
     /**
      * Método para agregar un extra, según 
      * su costo y el del platillo al que se 
      * le agrega.
-     * @param platillo el platillo al que 
-     * agregamos extras.
+     * @return el costo agregado.
      */
     public Double agrega();
 }
