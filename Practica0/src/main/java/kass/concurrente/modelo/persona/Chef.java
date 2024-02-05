@@ -40,7 +40,8 @@ public class Chef extends Persona{
      * Se fija en el stock del que se dispone, para comprobar
      * existencias de los ingredientes; en caso de no haber, 
      * se irá a conseguir más, lo que implica un retraso en 
-     * la ejecución
+     * la ejecución. Atender un platillo solo con nombre y 
+     * una lista de requeridos vacía implica un producto.
      * @param cliente
      * @param stock
      */

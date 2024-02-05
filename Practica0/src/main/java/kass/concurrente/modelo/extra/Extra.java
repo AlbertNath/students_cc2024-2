@@ -5,7 +5,8 @@ package kass.concurrente.modelo.extra;
  * <code>Decorator</code> para añadir extras a 
  * los platillos como toppings o adicionales.
  * </p>
- * @author Albert
+ * @author Alberto N. Medel Piña
+ * @version 1.0
  */
 public interface Extra {
 

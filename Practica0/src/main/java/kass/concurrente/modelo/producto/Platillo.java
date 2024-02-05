@@ -73,6 +73,7 @@ public class Platillo implements Extra {
      * cadena del platillo.
      * @return la cadena con el nombre del platillo.
      */
+    @Override
     public String getNombre() {
         return this.nombre;
     }
@@ -110,6 +111,12 @@ public class Platillo implements Extra {
         return total;
     }
 
+    /**
+     * Método para agregar un extra, según 
+     * su costo y el del platillo al que se 
+     * le agrega.
+     * @return el costo agregado.
+     */
     @Override
     public Double agrega() {
         return this.calculaPrecio();
