@@ -37,7 +37,10 @@ public class Chef extends Persona{
 
     /**
      * Método para despachar a un cliente y su orden. 
-     * Se fija en el stock del 
+     * Se fija en el stock del que se dispone, para comprobar
+     * existencias de los ingredientes; en caso de no haber, 
+     * se irá a conseguir más, lo que implica un retraso en 
+     * la ejecución
      * @param cliente
      * @param stock
      */
@@ -64,9 +67,9 @@ public class Chef extends Persona{
                 ProductoInventario pi = (ProductoInventario) stock.stream().filter(x -> x.getNombre()
                                              .equals(req)).findFirst().orElse(null);
                 if (pi != null){
+                    pi.consumir();
                     System.out.printf("\t>Ingrediente %s costo:\t %2.2f%n", 
                                       pi.getNombre(), pi.getCosto());
-                    pi.consumir();
                 }
             }
             Agregado serv = null;
@@ -82,7 +85,7 @@ public class Chef extends Persona{
                     serv = new Agregado(
                         new IngredienteExtra("Crema", 3., 
                         new IngredienteExtra("Queso cottage", 7., p)));
-                        break;
+                    break;
 
                 case "Arroz rojo":
                     serv = new Agregado(new IngredienteExtra("Vegetales", 2., p));
@@ -98,8 +101,9 @@ public class Chef extends Persona{
             tiempoTotal += p.getTiempoCoccion();
             System.out.println("¡Platillo listo!");
         }
-        System.out.println("Total de orden: " + costoTotal);
-        System.out.println("Tiempo total transcurrido: " + (tiempoTotal - cu.corta()));
+        System.out.println("Total de orden: $" + costoTotal);
+        Double tiempoFinal = (tiempoTotal <= cu.corta()) ? 0. : tiempoTotal - cu.corta();
+        System.out.println("Tiempo total transcurrido: " + (tiempoFinal));
         System.out.println("==================================================================================");
     }
 }

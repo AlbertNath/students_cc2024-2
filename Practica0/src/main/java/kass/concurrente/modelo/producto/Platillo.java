@@ -12,7 +12,7 @@ import kass.concurrente.modelo.extra.Extra;
 public class Platillo implements Extra {
     /** 
      * La lista de productos que se requieren 
-     * para la elaboración
+     * para la elaboración. Puede ser vacía.
     */
     private List<Producto> requeridos;
     /** El costo del platillo base */

@@ -66,10 +66,17 @@ public class Main {
         menu.add(new Platillo(receta, 15., 400, "Arroz rojo"));
 
         Chef ch1 = new Chef("Jaime", 55, new CuchilloJapones());
-        System.out.println("============================= Cafetería Diamond Dogs =============================");
+        
         Persona comensal1 = new Persona("Albert", 22);
-        comensal1.setOrden(menu);
+        comensal1.setOrden(Arrays.asList(menu.get(0), menu.get(2)));
+
+        Persona comensal2 = new Persona("Pablo", 24);
+        comensal2.setOrden(Arrays.asList(menu.get(3), new Platillo("Jicama", 0)));
+        System.out.println("============================= Cafetería Diamond Dogs =============================");
 
         ch1.atiende(comensal1, bodega);
+        ch1.atiende(comensal2, bodega);
+
+        System.out.println("================================== Fin del dia ==================================");
     }
 }
