@@ -28,14 +28,19 @@ public class Contador implements Runnable {
     @Override
     public void run() {
         System.out.println("DENTRO RUN");
-        suma();
+        suma(); 
     }
 
     /**
      * Metodo que suma
      */
     public void suma() {
-        for(int i = 0; i < RONDAS; ++i){
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        for(int i = 0; i < RONDAS; ++i){ 
             valor = valor + 1;
         }
     }

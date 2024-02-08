@@ -1,7 +1,5 @@
 package kass.concurrente.hilos;
 
-import java.util.ArrayList; 
-import java.util.List;
 
 public class Hilos implements Runnable {
     
@@ -19,13 +17,22 @@ public class Hilos implements Runnable {
 
     public static void main(String[] args) throws InterruptedException {
         Hilos h = new Hilos();//Se crea una instancia de la clase
-        Thread t1 = new Thread(h,"1");//Creamos un hilo, le pasamos de parametro la instancia de la clase y un nombre
-        Thread t2 = new Thread(h,"Hilo 2");
-        Thread t3 = new Thread(h,"Hilo 25");
-        Thread t4 = new Thread(h,"Hilo 45");
-        
-        t1.start();t2.start();t3.start();t4.start(); //Se inicializan los hilos para comenzar su ejecucion
+        //Thread t1 = new Thread(h,"1");//Creamos un hilo, le pasamos de parametro la instancia de la clase y un nombre
+        //Thread t2 = new Thread(h,"Hilo 2");
+        //Thread t3 = new Thread(h,"Hilo 25");
+        //Thread t4 = new Thread(h,"Hilo 45");
+        //
+        //t1.start();t2.start();t3.start();t4.start(); //Se inicializan los hilos para comenzar su ejecucion
+//
+        //t1.join();t2.join();t3.join();t4.join();//????
+        Integer totalHilos = 10;
+        Thread[] hilos = new Thread[totalHilos];
+        for (int i = 0; i < hilos.length; i++) {
+            hilos[i] = new Thread(h, ""+i);
+            hilos[i].start();
+        }
 
-        t1.join();t2.join();t3.join();t4.join();//????
+        for (Thread i : hilos) 
+            i.join();
     }
 }
