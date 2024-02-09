@@ -27,7 +27,7 @@ public class Contador implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("DENTRO RUN");
+        System.out.println("DENTRO RUN"); 
         suma(); 
     }
 
@@ -35,11 +35,14 @@ public class Contador implements Runnable {
      * Metodo que suma
      */
     public void suma() {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        String s = Thread.currentThread().getName();
+        Integer id = Integer.parseInt(s.substring(s.length() - 1));
+        Integer sleepTime = (id == 0)? 1000 : 1;
+        try {
+            Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for(int i = 0; i < RONDAS; ++i){ 
             valor = valor + 1;
         }
