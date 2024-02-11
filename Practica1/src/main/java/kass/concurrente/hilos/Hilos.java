@@ -17,10 +17,10 @@ public class Hilos implements Runnable {
 
     public static void main(String[] args) throws InterruptedException {
         Hilos h = new Hilos();//Se crea una instancia de la clase
-        Thread t1 = new Thread(h,"1");//Creamos un hilo, le pasamos de parametro la instancia de la clase y un nombre
-        Thread t2 = new Thread(h,"Hilo 2");
-        Thread t3 = new Thread(h,"Hilo 25");
-        Thread t4 = new Thread(h,"Hilo 45");
+        Thread t1 = new Thread("1");//Creamos un hilo, le pasamos de parametro la instancia de la clase y un nombre
+        Thread t2 = new Thread(h,"2");
+        Thread t3 = new Thread(h,"25");
+        Thread t4 = new Thread(h,"45");
         
         t1.start();t2.start();t3.start();t4.start(); //Se inicializan los hilos para comenzar su ejecucion
 
