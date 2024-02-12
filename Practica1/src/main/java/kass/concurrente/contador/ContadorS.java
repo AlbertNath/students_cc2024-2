@@ -30,19 +30,19 @@ public class ContadorS implements Runnable {
         suma();
     }
 
-    public synchronized void suma(){
-        for(int i = 0; i < RONDAS; ++i){
-            valor = valor + 1;
-        }
-    }
+    //public synchronized void suma(){
+    //    for(int i = 0; i < RONDAS; ++i){
+    //        valor = valor + 1;
+    //    }
+    //}
 
-/*     public void suma(){
+     public void suma(){
         synchronized(this){
             for(int i = 0; i < RONDAS; ++i){
                 valor = valor + 1;
             }
         }
-    } */
+    } 
 
     public static void main(String[] args) throws InterruptedException {
         ContadorS c = new ContadorS();
