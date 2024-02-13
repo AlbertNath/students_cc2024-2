@@ -6,7 +6,7 @@ package kass.concurrente.herencia;
  * @version 1.1
  */
 public class Hilos extends Thread {
-    public static final Integer totalHilos = 3;
+    public static final Integer TOTALHILOS = 3;
     public static final Integer TOTAL = 10000;
     private static Integer contador = 0;
 
@@ -24,7 +24,7 @@ public class Hilos extends Thread {
             contador++;   
     }
     public static void main(String[] args) throws InterruptedException {
-        Thread[] hilos = new Thread[totalHilos];
+        Thread[] hilos = new Thread[TOTALHILOS];
         for (int i = 0; i < hilos.length; i++) {
             hilos[i] = new Hilos();
             hilos[i].start();
