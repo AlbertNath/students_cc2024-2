@@ -6,7 +6,7 @@ package kass.concurrente.herencia;
  * @version 1.1
  */
 public class Hilos extends Thread {
-    public static final Integer TOTALHILOS = 3;
+    public static final Integer TOTALHILOS = 10;
     public static final Integer TOTAL = 10000;
     private static Integer contador = 0;
 
@@ -14,7 +14,7 @@ public class Hilos extends Thread {
     public void run() {
         String s = Thread.currentThread().getName();
         Integer id = Integer.parseInt(s.substring(s.length() - 1));
-        Integer sleepTime = (id == 0)? 1000 : 1;
+        Integer sleepTime = (id == 0)? 1500 : 0;
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
