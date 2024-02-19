@@ -66,6 +66,20 @@ public class Matrices implements Runnable {
         }
     }
 
+    private static void iniciaHilos(Matrices m, int numHilos, int[][] matrizIzq) throws Exception {
+        List<Thread> hilos = new ArrayList<>();
+        for (int i = 0; i < matrizIzq.length; i++) {
+            Thread t = new Thread(m, String.valueOf(i));
+            hilos.add(t);
+            t.start();
+            if(hilos.size() == numHilos) {
+                for (Thread thread : hilos) 
+                    thread.join();
+                hilos.clear();
+            }
+        } 
+    }
+
     public static void main(String[] args) throws InterruptedException {
         int[][] matrizA = generarMatrizAleatoria(3, 3);
         int[][] matrizB = generarMatrizAleatoria(3, 3);
@@ -100,16 +114,21 @@ public class Matrices implements Runnable {
         System.out.println("\nPrueba paralela con 100 hilos:");
         startTime = System.currentTimeMillis();
         Matrices matrices100 = new Matrices(matrizA, matrizB);
-        List<Thread> threads100 = new ArrayList<>();
-        int numHilos100 = 100; // Un hilo por cada fila de la matriz A
-        for (int i = 0; i < numHilos100; i++) {
-            Thread t = new Thread(matrices100, String.valueOf(i));
-            threads100.add(t);
-            t.start();
+        try {
+            iniciaHilos(matrices100, 100, matrizA);
+        } catch (Exception e) {
+            System.err.println(e);
         }
-        for (Thread thread : threads100) {
-            thread.join();
-        }
+        //List<Thread> threads100 = new ArrayList<>();
+        //int numHilos100 = 100; // Un hilo por cada fila de la matriz A
+        //for (int i = 0; i < numHilos100; i++) {
+        //    Thread t = new Thread(matrices100, String.valueOf(i));
+        //    threads100.add(t);
+        //    t.start();
+        //}
+        //for (Thread thread : threads100) {
+        //    thread.join();
+        //}
         endTime = System.currentTimeMillis();
         System.out.println("Tiempo de ejecución paralela con 100 hilos: " + (endTime - startTime) + "ms");
         imprimirMatriz(matrices100.resultado);
@@ -119,16 +138,21 @@ public class Matrices implements Runnable {
         System.out.println("\nPrueba paralela con 1000 hilos:");
         startTime = System.currentTimeMillis();
         Matrices matrices1000 = new Matrices(matrizA, matrizB);
-        List<Thread> threads1000 = new ArrayList<>();
-        int numHilos1000 = matrizA.length; // Un hilo por cada fila de la matriz A
-        for (int i = 0; i < numHilos1000; i++) {
-            Thread t = new Thread(matrices1000, String.valueOf(i));
-            threads1000.add(t);
-            t.start();
+        try {
+            iniciaHilos(matrices1000, 1000, matrizA);
+        } catch (Exception e) {
+            System.err.println(e);
         }
-        for (Thread thread : threads1000) {
-            thread.join();
-        }
+        //List<Thread> threads1000 = new ArrayList<>();
+        //int numHilos1000 = matrizA.length; // Un hilo por cada fila de la matriz A
+        //for (int i = 0; i < numHilos1000; i++) {
+        //    Thread t = new Thread(matrices1000, String.valueOf(i));
+        //    threads1000.add(t);
+        //    t.start();
+        //}
+        //for (Thread thread : threads1000) {
+        //    thread.join();
+        //}
         endTime = System.currentTimeMillis();
         System.out.println("Tiempo de ejecución paralela con 1000 hilos: " + (endTime - startTime) + "ms");
         imprimirMatriz(matrices1000.resultado);
