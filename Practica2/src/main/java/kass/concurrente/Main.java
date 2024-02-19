@@ -2,7 +2,6 @@ package kass.concurrente;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import kass.concurrente.constants.Constante;
 import kass.concurrente.crypto.Cifrar;
@@ -15,8 +14,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         String llave = "-4032809067-100-102-128102639-39-8176360";
-        Random rn = new Random();
-        Decifrador d = new Decifrador(llave, rn.nextInt(7, 14));
+        Decifrador d = new Decifrador(llave);
         List<Thread> decifradores = new ArrayList<>();
         
         Long inicio = System.nanoTime();

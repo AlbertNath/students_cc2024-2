@@ -1,47 +1,42 @@
 package kass.concurrente.crypto;
 
-import java.util.Random;
-
 import kass.concurrente.constants.Constante;
 
 public class Decifrador implements Runnable {
     private String key;
-    private Random rand;
-    private Integer pswrdLen;
-    private Integer alphabetLen;
+    private char[] alphabet;
     private volatile Boolean found;
 
-    public Decifrador(String key, Integer pswrdLen){
+    public Decifrador(String key){
         this.key = key;
+        this.alphabet = Constante.ALFABETO.toCharArray();
         this.found = false;
-        this.pswrdLen = pswrdLen;
-        this.alphabetLen = Constante.ALFABETO.length();
-        this.rand = new Random();
     }
 
-    private synchronized void crack() throws Exception {
-        char[] alphabet = Constante.ALFABETO.toCharArray();
-        String idChar = Thread.currentThread().getName();
-        
-        
-        while (!found) {
-            StringBuilder password = new StringBuilder(idChar);
-            for(int i = 1; i < pswrdLen; i++){
-                Integer curr = rand.nextInt(27 - 1) ;
-                password.append(alphabet[curr]);
-                System.out.println(curr);
-            }
-            if(Cifrar.descifraC(key, password.toString())){
-                this.found = true;
-                System.out.printf("Hilo: %s encontró la contraseña: %s", idChar, password);
-            }
+    private synchronized void crack(String password) throws Exception {
+    
+        if(password.length() >= 7 && password.length() <= 13 && Cifrar.descifraC(key, password)) {
+            this.found = true;
+            System.out.printf("Hilo: %s encontró la contraseña: %s", 
+                              Thread.currentThread().getName(), 
+                              password);
+            return;
+            
         }
+
+        if(password.length() < 13) {
+            for(int i = 0; i < alphabet.length; i++) {
+                String newPassword = password + alphabet[i];
+                crack(newPassword);
+            }
+        }   
     }
 
     @Override
     public void run() {
         try {
-            crack();
+            String idChar = Thread.currentThread().getName();
+            crack(idChar);
         } catch (Exception e) {
             e.printStackTrace();
         }
