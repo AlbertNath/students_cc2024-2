@@ -15,14 +15,7 @@ public class Main {
         String palabraCifrada = Constante.LLAVE;
         String alfabeto = Constante.ALFABETO;
 
-        int lower = 7;
-        int upper = 13;
-
-        for (int i = lower; i <= upper; i++) {
-            if (encontrarContra(palabraCifrada, alfabeto, i)) {
-                break;
-            }
-        }
+        encontrarContra(palabraCifrada, alfabeto, 9);
 
         Long fin = System.nanoTime();
         Long total = fin - inicio;
