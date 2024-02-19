@@ -64,6 +64,8 @@ public class Matrices implements Runnable {
         }
     }
 
+
+
     private static void iniciaHilos(Matrices m, int numHilos, int[][] matrizIzq) throws Exception {
         List<Thread> hilos = new ArrayList<>();
         for (int i = 0; i < matrizIzq.length; i++) {
