@@ -13,8 +13,8 @@ import kass.concurrente.crypto.Decifrador;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        String llave = "-4032809067-100-102-128102639-39-8176360";
-        Decifrador d = new Decifrador(llave);
+        // String llave = "-4032809067-100-102-128102639-39-8176360";
+        Decifrador d = new Decifrador(Constante.LLAVE);
         List<Thread> decifradores = new ArrayList<>();
         
         Long inicio = System.nanoTime();
