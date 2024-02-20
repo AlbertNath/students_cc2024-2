@@ -8,7 +8,7 @@ import kass.concurrente.crypto.Cifrar;
 import kass.concurrente.crypto.Decifrador;
 
 /**
- * Clase Principal
+ *  Clase Principal
  */
 public class Main {
 
@@ -33,7 +33,7 @@ public class Main {
         System.out.println("Practica 2");
     }
 
-    public static double nanoSegundoASegundo(Long tiempo){
-        return tiempo *1.0 * Math.pow(10,-9);
+    public static double nanoSegundoASegundo(Long tiempo) {
+        return tiempo * 1.0 * Math.pow(10, -9);
     }
 }
