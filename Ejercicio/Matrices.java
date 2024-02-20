@@ -81,8 +81,23 @@ public class Matrices implements Runnable {
         }
     }
     
-    private static void ejecuta(int numHilos) {
-        
+    private static void ejecuta(int numHilos, int[][] mA, int[][] mB) {
+        String linea = "————————————————————————————————————————————————————————";
+        String msg = "\nPrueba paralela con %d hilo";
+        msg += (numHilos == 1)? " | sequencial \n" : "s \n";
+        System.out.printf(msg, numHilos);
+        long startTime = System.nanoTime();
+        Matrices m = new Matrices(mA, mB);
+        try {
+            iniciaHilos(m, numHilos, mA);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        long endTime = System.nanoTime();
+        System.out.printf("Tiempo de ejecución paralela con %d hilo(s): " + 
+                          (endTime - startTime) + "ms\n", numHilos);
+        imprimirMatriz(m.resultado);
+        System.out.println(linea);
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -97,47 +112,51 @@ public class Matrices implements Runnable {
         System.out.println(linea);
         System.out.println(linea);
     
-        System.out.println(linea);
-        System.out.println("\nPrueba paralela con 1 hilo | secuencial:");
-        long startTime = System.nanoTime();
-        Matrices matrices1 = new Matrices(matrizA, matrizB);
-        //matrices1.multiplicaConcurrente(0, matrizA.length);
-        try {
-            iniciaHilos(matrices1, 1, matrizA);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        long endTime = System.nanoTime();
-        System.out.println("Tiempo de ejecución paralela con 1 hilo: " + (endTime - startTime) + "ms");
-        imprimirMatriz(matrices1.resultado);
-        System.out.println(linea);
-
-        System.out.println(linea);
-        System.out.println("\nPrueba paralela con 100 hilos:");
-        startTime = System.nanoTime();
-        Matrices matrices100 = new Matrices(matrizA, matrizB);
-        try {
-            iniciaHilos(matrices100, 100, matrizA);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        endTime = System.nanoTime();
-        System.out.println("Tiempo de ejecución paralela con 100 hilos: " + (endTime - startTime) + "ms");
-        imprimirMatriz(matrices100.resultado);
-        System.out.println(linea);
-
-        System.out.println(linea);
-        System.out.println("\nPrueba paralela con 1000 hilos:");
-        startTime = System.nanoTime();
-        Matrices matrices1000 = new Matrices(matrizA, matrizB);
-        try {
-            iniciaHilos(matrices1000, 1000, matrizA);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        endTime = System.nanoTime();
-        System.out.println("Tiempo de ejecución paralela con 1000 hilos: " + (endTime - startTime) + "ms");
-        imprimirMatriz(matrices1000.resultado);
-        System.out.println(linea);
+        ejecuta(1, matrizA, matrizB);
+        ejecuta(100, matrizA, matrizB);
+        ejecuta(1000, matrizA, matrizB);
+        // Más rápido que disparar un hilo????:
+        //System.out.println(linea);
+        //System.out.println("\nPrueba paralela con 1 hilo | secuencial:");
+        //long startTime = System.nanoTime();
+        //Matrices matrices1 = new Matrices(matrizA, matrizB);
+        ////matrices1.multiplicaConcurrente(0, matrizA.length); Es más rápido???
+        //try {
+        //    iniciaHilos(matrices1, 1, matrizA);
+        //} catch (Exception e) {
+        //    System.err.println(e);
+        //}
+        //long endTime = System.nanoTime();
+        //System.out.println("Tiempo de ejecución paralela con 1 hilo: " + (endTime - startTime) + "ms");
+        //imprimirMatriz(matrices1.resultado);
+        //System.out.println(linea);
+//
+        //System.out.println(linea);
+        //System.out.println("\nPrueba paralela con 100 hilos:");
+        //startTime = System.nanoTime();
+        //Matrices matrices100 = new Matrices(matrizA, matrizB);
+        //try {
+        //    iniciaHilos(matrices100, 100, matrizA);
+        //} catch (Exception e) {
+        //    System.err.println(e);
+        //}
+        //endTime = System.nanoTime();
+        //System.out.println("Tiempo de ejecución paralela con 100 hilos: " + (endTime - startTime) + "ms");
+        //imprimirMatriz(matrices100.resultado);
+        //System.out.println(linea);
+//
+        //System.out.println(linea);
+        //System.out.println("\nPrueba paralela con 1000 hilos:");
+        //startTime = System.nanoTime();
+        //Matrices matrices1000 = new Matrices(matrizA, matrizB);
+        //try {
+        //    iniciaHilos(matrices1000, 1000, matrizA);
+        //} catch (Exception e) {
+        //    System.err.println(e);
+        //}
+        //endTime = System.nanoTime();
+        //System.out.println("Tiempo de ejecución paralela con 1000 hilos: " + (endTime - startTime) + "ms");
+        //imprimirMatriz(matrices1000.resultado);
+        //System.out.println(linea);
     }
 }
