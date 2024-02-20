@@ -1,21 +1,37 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+/**
+ * Clase para representación de matrices. En general 
+ * martices de <i>n * m</i>, con la operación de 
+ * multiplicación disponible. 
+ */
 public class Matrices implements Runnable {
+    /** Primera matriz */
     int[][] matrizA;
+    /** Segunda matriz */
     int[][] matrizB;
+    /** Matriz resultado */
     int[][] resultado;
+    /** Generador de números pseudoaleatorios */
     static Random rnd = new Random();
 
-    // Constructor de la clase Matrices
+    /**
+     * Constructor de la clase Matrices.
+     * @param matrizA primera matriz con la que operar.
+     * @param matrizB segunda matriz con la que operar.
+     */
     public Matrices(int[][] matrizA, int[][] matrizB) {
         this.matrizA = matrizA;
         this.matrizB = matrizB;
         this.resultado = new int[matrizA.length][matrizB[0].length];
     }
 
-    // Método para multiplicar matrices de manera concurrente
+    /**
+     * Método para multiplicar matrices de manera concurrente
+     * @param filaInicio índce de la fila inicial.
+     * @param filaFin ínidice de la fila final.
+     */
     public void multiplicaConcurrente(int filaInicio, int filaFin) {
         for (int i = filaInicio; i < filaFin; i++) {
             for (int j = 0; j < matrizB[0].length; j++) {
@@ -33,14 +49,19 @@ public class Matrices implements Runnable {
         multiplicaConcurrente(filaInicio, filaFin);
     }
 
-    // Método que genera una matriz con valores pseudoaleatorios
+    /**
+     * Método que genera una matriz con valores pseudoaleatorios
+     * @param filas cantidad de filas deseadas.
+     * @param columnas cantidad de columnas deseadas.
+     * @return una matriz de dimensiones <i>filas * columnas</i>.
+     * @throws InterruptedException si algún hilo sufre un error.
+     */
     public static int[][] generarMatrizAleatoria(int filas, int columnas) throws InterruptedException {
         int[][] matriz = new int[filas][columnas];
         List<Thread> hilos = new ArrayList<>();
         for (int i = 0; i < filas; i++) {
             final int fila = i; 
             Thread t = new Thread(() -> {
-                Random random = new Random();
                 for (int j = 0; j < columnas; j++) {
                     matriz[fila][j] = rnd.nextInt(10); // Genera números aleatorios entre 0 y 9
                 }
@@ -55,7 +76,10 @@ public class Matrices implements Runnable {
     }
     
 
-    // Método para imprimir una matriz
+    /**
+     * Método para imprimir una matriz
+     * @param matriz matriz a imprimr.
+     */
     public static void imprimirMatriz(int[][] matriz) {
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
@@ -66,8 +90,18 @@ public class Matrices implements Runnable {
     }
 
 
-
-    private static void iniciaHilos(Matrices m, int numHilos, int[][] matrizIzq) throws Exception {
+    /**
+     * Método que inicializa una canitdad dada de 
+     * instancias de clase <code>Matrices</code> 
+     * como hilos.
+     * @param m la instanca concreta de la clase 
+     * <code>Matrices</code>.
+     * @param numHilos la cantiad de hilos deseada.
+     * @param matrizIzq la matriz izquierda de la 
+     * operación.
+     * @throws InterruptedException si algún hilo sufre un error.
+     */
+    private static void iniciaHilos(Matrices m, int numHilos, int[][] matrizIzq) throws InterruptedException {
         List<Thread> hilos = new ArrayList<>();
         for (int i = 0; i < matrizIzq.length; i++) {
             Thread t = new Thread(m, String.valueOf(i));
@@ -80,7 +114,16 @@ public class Matrices implements Runnable {
             }
         }
     }
-    
+   
+    /**
+     * Realiza una ejecución de la operación <i>multiplica</i>
+     * sobre dos matrices con una cantidad de hilos dada.
+     * Imprime el resultado y el tiempo en milisegundos 
+     * transucrrido.
+     * @param numHilos la cantiad de hilos deseada.
+     * @param mA primera matriz con la que oprerar.
+     * @param mB segunda matriz con la que oprerar.
+     */
     private static void ejecuta(int numHilos, int[][] mA, int[][] mB) {
         String linea = "————————————————————————————————————————————————————————";
         String msg = "\nPrueba paralela con %d hilo";
@@ -95,9 +138,9 @@ public class Matrices implements Runnable {
         }
         long endTime = System.nanoTime();
         msg = "Tiempo de ejecución paralela con %d hilo";
-        long total = endTime - startTime;
-        msg += (numHilos == 1)? ": " + total + "ms\n" :
-                                "s: " + total + "ms\n";
+        long et = endTime - startTime;
+        msg += (numHilos == 1)? ": " + et + "ms\n" :
+                                "s: " + et + "ms\n";
         System.out.printf(msg, numHilos);
         imprimirMatriz(m.resultado);
         System.out.println(linea);
