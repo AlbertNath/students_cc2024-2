@@ -48,7 +48,7 @@ public class Decifrador implements Runnable {
             if(Cifrar.descifraC(key, password)) {
                 synchronized(this){
                     this.found = true;
-                    System.out.printf("Hilo: %s encontró la contraseña: %s \n", 
+                    System.out.printf("Hilo: %s encontró la contraseña: %s %n", 
                                        Thread.currentThread().getName(), 
                                        password);
                 }

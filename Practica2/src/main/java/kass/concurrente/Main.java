@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kass.concurrente.constants.Constante;
-import kass.concurrente.crypto.Cifrar;
 import kass.concurrente.crypto.Decifrador;
 
 /**
@@ -20,7 +19,7 @@ public class Main {
         Long fin = System.nanoTime();
 
         String alfabeto = Constante.ALFABETO;
-        int nLetras = (int) alfabeto.length() / Constante.HILOS;
+        int nLetras = alfabeto.length() / Constante.HILOS;
 
         String letrasIni;
         
