@@ -43,7 +43,7 @@ public class Decifrador implements Runnable {
         if(this.found)
             return;
     
-        if(password.length() >= 6 && password.length() <= 6) {
+        if(password.length() >= 6 && password.length() <= 13) {
             System.out.println(password);
             if(Cifrar.descifraC(key, password)) {
                 synchronized(this){
@@ -68,9 +68,11 @@ public class Decifrador implements Runnable {
     @Override
     public void run() {
         try {
-            String idChar = Thread.currentThread().getName();
-            // crack(idChar + "yaabmywat");
-            crack(idChar);
+            String nombre = Thread.currentThread().getName();
+            char[] letrasIni = nombre.toCharArray();
+            for(char c : letrasIni) {
+                crack(String.valueOf(c));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
