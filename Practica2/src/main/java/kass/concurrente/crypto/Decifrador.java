@@ -40,7 +40,7 @@ public class Decifrador implements Runnable {
      */
     private void crack(String password) throws Exception {
 
-        if(this.found)
+        if(Boolean.TRUE.equals(this.found))
             return;
     
         if(password.length() >= 6 && password.length() <= 13) {
