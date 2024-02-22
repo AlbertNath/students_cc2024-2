@@ -16,31 +16,31 @@ public class Main {
         List<Thread> decifradores = new ArrayList<>();
         
         Long inicio = System.nanoTime();
-        Long fin = System.nanoTime();
-
+        
         String alfabeto = Constante.ALFABETO;
         int nLetras = alfabeto.length() / Constante.HILOS;
-
+        
         String letrasIni;
         
         for (int i = 0; i < Constante.HILOS; i++){
-
+            
             if(alfabeto.length() >= nLetras) {
                 letrasIni = alfabeto.substring(0, nLetras);
                 alfabeto = alfabeto.substring(nLetras);
             } else {
                 letrasIni = alfabeto;
             }
-
+            
             Thread tmp = new Thread(d, letrasIni);
             tmp.start();
             decifradores.add(tmp);
-
+            
         }
-
+        
         for (Thread t : decifradores)
-            t.join();
-
+        t.join();
+        
+        Long fin = System.nanoTime();
         Long total = fin-inicio;
         System.out.println("TIEMPO TOTAL: " + nanoSegundoASegundo(total));
         System.out.println("Practica 2");
