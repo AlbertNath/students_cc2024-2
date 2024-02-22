@@ -38,7 +38,7 @@ public class Main {
         }
         
         for (Thread t : decifradores)
-        t.join();
+            t.join();
         
         Long fin = System.nanoTime();
         Long total = fin-inicio;
