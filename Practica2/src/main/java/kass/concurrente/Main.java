@@ -15,6 +15,7 @@ public class Main {
         String palabraCifrada = Constante.LLAVE;
         String alfabeto = Constante.ALFABETO;
 
+
         encontrarContra(palabraCifrada, alfabeto, 9);
 
         Long fin = System.nanoTime();
