@@ -1,3 +1,5 @@
+package ejercicio;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -124,27 +126,28 @@ public class Matrices implements Runnable {
      * @param mA primera matriz con la que oprerar.
      * @param mB segunda matriz con la que oprerar.
      */
-    private static void ejecuta(int numHilos, int[][] mA, int[][] mB) {
+    private static void ejecuta(int numHilos, int[][] mA, int[][] mB) throws InterruptedException {
         String linea = "————————————————————————————————————————————————————————";
         String msg = "\nPrueba paralela con %d hilo";
-        msg += (numHilos == 1)? " | sequencial \n" : "s \n";
+        msg += (numHilos == 1) ? " | secuencial \n" : "s \n";
         System.out.printf(msg, numHilos);
         long startTime = System.nanoTime();
         Matrices m = new Matrices(mA, mB);
         try {
             iniciaHilos(m, numHilos, mA);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Re-interrupt the current thread
+            e.printStackTrace(); // Or handle the interruption appropriately
         }
         long endTime = System.nanoTime();
         msg = "Tiempo de ejecución paralela con %d hilo";
         long et = endTime - startTime;
-        msg += (numHilos == 1)? ": " + et + "ms\n" :
-                                "s: " + et + "ms\n";
+        msg += (numHilos == 1) ? ": " + et + "ms\n" : "s: " + et + "ms\n";
         System.out.printf(msg, numHilos);
         imprimirMatriz(m.resultado);
         System.out.println(linea);
     }
+    
 
     public static void main(String[] args) throws InterruptedException {
         int[][] matrizA = generarMatrizAleatoria(3, 3);
@@ -161,20 +164,5 @@ public class Matrices implements Runnable {
         ejecuta(1, matrizA, matrizB);
         ejecuta(100, matrizA, matrizB);
         ejecuta(1000, matrizA, matrizB);
-        // Más rápido que disparar un hilo????:
-        //System.out.println(linea);
-        //System.out.println("\nPrueba paralela con 1 hilo | secuencial:");
-        //long startTime = System.nanoTime();
-        //Matrices matrices1 = new Matrices(matrizA, matrizB);
-        ////matrices1.multiplicaConcurrente(0, matrizA.length); Es más rápido???
-        //try {
-        //    iniciaHilos(matrices1, 1, matrizA);
-        //} catch (Exception e) {
-        //    System.err.println(e);
-        //}
-        //long endTime = System.nanoTime();
-        //System.out.println("Tiempo de ejecución paralela con 1 hilo: " + (endTime - startTime) + "ms");
-        //imprimirMatriz(matrices1.resultado);
-        //System.out.println(linea);
     }
 }
