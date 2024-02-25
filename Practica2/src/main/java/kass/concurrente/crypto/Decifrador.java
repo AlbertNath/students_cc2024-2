@@ -40,18 +40,16 @@ public class Decifrador implements Runnable {
      */
     private void crack(String password) throws Exception {
 
-        if(this.found)
+        if(Boolean.TRUE.equals(this.found))
             return;
     
         if(password.length() >= 6 && password.length() <= 13) {
             System.out.println(password);
             if(Cifrar.descifraC(key, password)) {
-                synchronized(this){
-                    this.found = true;
-                    System.out.printf("Hilo: %s encontró la contraseña: %s %n", 
-                                       Thread.currentThread().getName(), 
-                                       password);
-                }
+                this.found = true;
+                System.out.printf("Hilo: %s encontró la contraseña: %s %n", 
+                                    Thread.currentThread().getName(), 
+                                    password);
                 return;
            }
             
