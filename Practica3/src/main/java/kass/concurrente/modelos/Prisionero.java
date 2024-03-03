@@ -3,7 +3,7 @@ package kass.concurrente.modelos;
 /**
  * Clase que modela un prisioner
  * @version 1.0
- * @author <Su equipo>
+ * @author <PaoPatrol>
  */
 public class Prisionero {
     protected Integer id;
@@ -17,8 +17,32 @@ public class Prisionero {
      * @param marcado true si ya paso
      */
     public Prisionero(Integer id, Boolean esVocero, Boolean marcado){
-        //Aqui pon lo que falta
+        this.id = id;
+        this.esVocero = esVocero;
+        this.marcado = marcado;
     }
 
-    //Annadir getter and setter, toString.
+    public Integer getId() {
+        return id;
+    }
+
+    public Boolean getEsVocero() {
+        return esVocero;
+    }
+
+    public Boolean getMarcado() {
+        return marcado;
+    }
+
+    public Integer getContador() {
+        return -1; //!!!!
+    }
+
+    public void setMarcado(Boolean estado) {
+        this.marcado = estado;
+    }
+
+    public void incrementaContador() {
+        
+    }
 }

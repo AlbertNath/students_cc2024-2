@@ -10,8 +10,18 @@ public class Vocero extends Prisionero{
     protected Integer contador;
     public Vocero(Integer id, Boolean esVocero, Boolean marcado) {
         super(id, esVocero, marcado);
+        this.contador = 0;
         //Completar y hacer documentacion
     }
-    
-    //Mismo caso que el otro, annadir getter and setter
+   
+    @Override
+    public Integer getContador() {
+        return this.contador;
+    }
+
+    @Override
+    public void incrementaContador() {
+        this.contador++;
+    }
+    //Mismo caso que el otro, annadir getter and setter... No hereda?
 }

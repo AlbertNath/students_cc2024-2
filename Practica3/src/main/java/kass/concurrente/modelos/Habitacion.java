@@ -1,23 +1,27 @@
 package kass.concurrente.modelos;
 
+import java.util.Objects;
+import java.util.Random;
+import kass.concurrente.constantes.Contante;
 /**
  * Clase que fungira como habitacion
  * Se sabe que existe un interruptor que nos dice
  * si el foco esta prendido o no
  * Se desconoce el estado inicial del foco (Usar un random, para que sea
  * pseudoaleatorio el estado inicial)
- * @author <Equipo>
+ * @author <PaoPatrol>
  * @version 1.0
  */
 public class Habitacion {
     private Boolean prendido;
+    private Random rnd = new Random();
 
     /**
      * Metodo Constructor
      * Aqui se define el como estara el foco inicialmente
      */
     public Habitacion(){
-
+        this.prendido = (this.rnd.nextInt(1) == 1);
     }
 
     /**
@@ -31,6 +35,33 @@ public class Habitacion {
      * @throws InterruptedException Si falla algun hilo
      */
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
-        return null;
+        Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
+
+        if (Boolean.TRUE.equals(prisionero.getMarcado()))
+            return true;
+
+        if (Boolean.TRUE.equals(prisionero.getEsVocero()) && (Boolean.FALSE.equals(this.prendido))) {
+            prisionero.incrementaContador();
+            this.prendido = true;  
+                
+            if (Objects.equals(prisionero.getContador(), Contante.PRISIONEROS - 1))
+                return false;    
+            
+            return true;
+        }
+
+        if (Boolean.TRUE.equals(this.prendido)) {
+            this.prendido = false;
+            prisionero.setMarcado(true);
+        }
+        return true;
+    }
+
+    public void setPrendido(Boolean estado) {
+        this.prendido = estado;
+    }
+
+    public Boolean getPrendido() {
+        return this.prendido;
     }
 }
