@@ -18,6 +18,7 @@ public class Habitacion {
     private Boolean prendido;
     private Random rnd = new Random();
     final Logger LOG = Logger.getLogger(Habitacion.class.getName());
+    private Contante constante;
 
     /**
      * Metodo Constructor
