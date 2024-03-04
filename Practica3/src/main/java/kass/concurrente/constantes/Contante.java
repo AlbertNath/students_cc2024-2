@@ -12,4 +12,5 @@ public class Contante {
     public static final Integer CINCO_SEGUNDOS = 1000;
     public static final String ROJO = "\u001B[31m";
     public static final String AZUL = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
 }

@@ -11,6 +11,7 @@ import kass.concurrente.modelos.Habitacion;
 import kass.concurrente.modelos.Prisionero;
 import kass.concurrente.modelos.Vocero;
 
+import static kass.concurrente.constantes.Contante.AZUL;
 import static kass.concurrente.constantes.Contante.LOGS;
 
 /**
@@ -47,13 +48,13 @@ public class Main implements Runnable {
     public void run() {
         while(Boolean.TRUE.equals(this.stop)){
             Integer id = Integer.valueOf(Thread.currentThread().getName());
-            System.out.println("Hilo entrante: " + id);
+            //LOG.info(Con "Hilo entrante: " + id);
             try {
                 this.lock.lock();
                 if (Boolean.TRUE.equals(this.stop))
                     this.stop = h.entraHabitacion(prisioneros.get(id));
                 this.lock.unlock();     
-            System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
+            //System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
             System.out.println("Hilo saliente: " + id);
             } catch (InterruptedException e) {
                 e.printStackTrace();

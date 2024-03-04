@@ -47,9 +47,9 @@ public class Habitacion {
                 System.out.println("Apagando");
                 setPrendido(false);
                 prisionero.incrementaContador();
-                System.out.println(prisionero.getContador() );
+                //System.out.println(prisionero.getContador() );
                 if (prisionero.getContador() == Contante.PRISIONEROS - 1) {
-                    LOG.info("TODOS PASARON!!!");
+                    LOG.info(Contante.ROJO + "TODOS PASARON!!!" + Contante.RESET);
                     return false;
                 }
             }
@@ -57,8 +57,11 @@ public class Habitacion {
             if (Boolean.TRUE.equals(prisionero.getMarcado()))
                 return true; 
 
-            System.out.println("Prendiendo (Hilo " + prisionero.getId() +")");
+            LOG.info(Contante.AZUL + "Prisionero: " + prisionero.getId() +  Contante.RESET);
+            LOG.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
+            //System.out.println("Prendiendo (Hilo " + prisionero.getId() +")");
             if (Boolean.FALSE.equals(this.prendido)) {
+                LOG.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
                 setPrendido(true);
                 prisionero.setMarcado(true);
             }
