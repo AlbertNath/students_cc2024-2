@@ -41,20 +41,23 @@ public class Habitacion {
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
         Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
         if (Boolean.TRUE.equals(prisionero.getEsVocero())) {
+            prisionero = (Vocero) prisionero;
             if(Boolean.TRUE.equals(this.prendido)) {
-                System.out.println("Encendiendo");
+                System.out.println("Apagando");
                 setPrendido(false);
                 prisionero.incrementaContador();
-                if (prisionero.getContador() == Contante.PRISIONEROS - 1)
+                System.out.println(prisionero.getContador() );
+                if (prisionero.getContador() == Contante.PRISIONEROS - 1) {
                     LOG.info("TODOS PASARON!!!");
-                return (prisionero.getContador() == Contante.PRISIONEROS - 1);
+                    return false;
+                }
             }
         } else {
-           if (Boolean.TRUE.equals(prisionero.getMarcado()))
+            if (Boolean.TRUE.equals(prisionero.getMarcado()))
                 return true; 
 
-            System.out.println("Apagando (Hilo " + prisionero.getId() +")");
-           if (Boolean.FALSE.equals(this.prendido)) {
+            System.out.println("Prendiendo (Hilo " + prisionero.getId() +")");
+            if (Boolean.FALSE.equals(this.prendido)) {
                 setPrendido(true);
                 prisionero.setMarcado(true);
             }

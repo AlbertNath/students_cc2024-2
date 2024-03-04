@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import kass.concurrente.constantes.Contante;
 import kass.concurrente.modelos.Habitacion;
 import kass.concurrente.modelos.Prisionero;
+import kass.concurrente.modelos.Vocero;
 
 import static kass.concurrente.constantes.Contante.LOGS;
 
@@ -44,19 +45,22 @@ public class Main implements Runnable {
      */
     @Override
     public void run() {
-        Integer id = Integer.valueOf(Thread.currentThread().getName());
-        System.out.println("Hilo entrante: " + id);
-        try {
-            if (Boolean.TRUE.equals(this.stop)) {
-               this.lock.lock();
-               this.stop = h.entraHabitacion(prisioneros.get(id));
-               this.lock.unlock();        
+        while(Boolean.TRUE.equals(this.stop)){
+            Integer id = Integer.valueOf(Thread.currentThread().getName());
+            System.out.println("Hilo entrante: " + id);
+            try {
+                if (Boolean.TRUE.equals(this.stop)) {
+                this.lock.lock();
+                this.stop = h.entraHabitacion(prisioneros.get(id));
+                this.lock.unlock();        
             }
-        System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
-        System.out.println("Hilo saliente: " + id);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
+            System.out.println("Hilo saliente: " + id);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }   
         }
+        
     }
 
 
@@ -67,7 +71,7 @@ public class Main implements Runnable {
 
         for(int i = 0; i < Contante.PRISIONEROS; i++){ 
             if (i == 0) {
-                Prisionero vocero = new Prisionero(i, true, false);
+                Prisionero vocero = new Vocero(i, true, false);
                 m.prisioneros.add(vocero);
             } else {
                 Prisionero prisionero = new Prisionero(i, false, false);

@@ -22,27 +22,43 @@ class HabitacionTest {
 
     @Test
     void switchTest1(){
-        h.entraHabitacion(p);
-        assertTrue(h.getPrendido());
+        try {
+            h.entraHabitacion(p);
+            assertTrue(h.getPrendido());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void switchTest2(){
-        h.setPrendido(true);
-        h.entraHabitacion(v);
-        assertFalse(h.getPrendido());
+        try {
+            h.setPrendido(true);
+            h.entraHabitacion(v);
+            assertFalse(h.getPrendido());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void marcado(){
-        h.entraHabitacion(p);
-        assertTrue(p.getMarcado());
+        try {
+            h.entraHabitacion(p);
+            assertTrue(p.getMarcado());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void simSimple(){
-        h.entraHabitacion(p);
-        h.entraHabitacion(v);
-        assertTrue(v.getContador() == 1);
+        try {
+            h.entraHabitacion(p);
+            h.entraHabitacion(v);
+            assertTrue(v.getContador() == 1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
