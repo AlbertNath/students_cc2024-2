@@ -1,8 +1,14 @@
 package kass.concurrente;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
+
+import kass.concurrente.constantes.Contante;
+import kass.concurrente.modelos.Habitacion;
+import kass.concurrente.modelos.Prisionero;
 
 import static kass.concurrente.constantes.Contante.LOGS;
 
@@ -14,10 +20,15 @@ import static kass.concurrente.constantes.Contante.LOGS;
  */
 public class Main implements Runnable {
 
-    Lock lock;
-
+    Lock lock; 
+    public volatile List<Prisionero> prisioneros;    
+    private volatile Boolean stop;
+    private Habitacion h;
     public Main(){
         lock = new ReentrantLock();
+        this.prisioneros = new ArrayList<>();
+        this.h = new Habitacion();
+        this.stop = true;
         //Agregar lo que haga falta para que funcione
     }
 
@@ -33,16 +44,49 @@ public class Main implements Runnable {
      */
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        
+        Integer id = Integer.valueOf(Thread.currentThread().getName());
+        System.out.println("Hilo entrante: " + id);
+        try {
+            if (Boolean.TRUE.equals(this.stop)) {
+               this.lock.lock();
+               this.stop = h.entraHabitacion(prisioneros.get(id));
+               this.lock.unlock();        
+            }
+        System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
+        System.out.println("Hilo saliente: " + id);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
     public static void main(String[] args) {
         Main m = new Main();
 
+        List<Thread> threads = new ArrayList<>(); 
+
+        for(int i = 0; i < Contante.PRISIONEROS; i++){ 
+            if (i == 0) {
+                Prisionero vocero = new Prisionero(i, true, false);
+                m.prisioneros.add(vocero);
+            } else {
+                Prisionero prisionero = new Prisionero(i, false, false);
+                m.prisioneros.add(prisionero);
+            }
+
+            Thread t = new Thread(m,""+i);
+            threads.add(t); 
+            t.start(); 
+        }
+
+        for(Thread th : threads){
+            try {
+                th.join();
+            } catch (InterruptedException e) {e.printStackTrace();}
+        }
+
         final Logger LOG = Logger.getLogger(Main.class.getName()); // EJEMPLO LOGGER
 
-        if(LOGS) LOG.info("HOLA SOY UN MENSAJE");
+        //if(LOGS) LOG.info("HOLA SOY UN MENSAJE");
     }
 }

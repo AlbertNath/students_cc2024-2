@@ -2,6 +2,8 @@ package kass.concurrente.modelos;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.logging.Logger;
+
 import kass.concurrente.constantes.Contante;
 /**
  * Clase que fungira como habitacion
@@ -15,6 +17,7 @@ import kass.concurrente.constantes.Contante;
 public class Habitacion {
     private Boolean prendido;
     private Random rnd = new Random();
+    final Logger LOG = Logger.getLogger(Habitacion.class.getName());
 
     /**
      * Metodo Constructor
@@ -22,6 +25,7 @@ public class Habitacion {
      */
     public Habitacion(){
         this.prendido = (this.rnd.nextInt(2) == 1);
+        LOG.info("Habitación inicia con estado: " + this.prendido);
     }
 
     /**
@@ -37,18 +41,21 @@ public class Habitacion {
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
         Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
         if (Boolean.TRUE.equals(prisionero.getEsVocero())) {
-            Prisionero v = (Vocero) prisionero;
             if(Boolean.TRUE.equals(this.prendido)) {
+                System.out.println("Encendiendo");
                 setPrendido(false);
-                v.incrementaContador();
-                return (v.getContador() == Contante.PRISIONEROS - 1);
+                prisionero.incrementaContador();
+                if (prisionero.getContador() == Contante.PRISIONEROS - 1)
+                    LOG.info("TODOS PASARON!!!");
+                return (prisionero.getContador() == Contante.PRISIONEROS - 1);
             }
         } else {
            if (Boolean.TRUE.equals(prisionero.getMarcado()))
                 return true; 
 
-           if (Boolean.TRUE.equals(this.prendido)) {
-                this.prendido = false;
+            System.out.println("Apagando (Hilo " + prisionero.getId() +")");
+           if (Boolean.FALSE.equals(this.prendido)) {
+                setPrendido(true);
                 prisionero.setMarcado(true);
             }
         }   
