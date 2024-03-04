@@ -21,7 +21,7 @@ public class Habitacion {
      * Aqui se define el como estara el foco inicialmente
      */
     public Habitacion(){
-        this.prendido = (this.rnd.nextInt(1) == 1);
+        this.prendido = (this.rnd.nextInt(2) == 1);
     }
 
     /**
