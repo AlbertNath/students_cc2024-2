@@ -36,25 +36,42 @@ public class Habitacion {
      */
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
         Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
+        if (Boolean.TRUE.equals(prisionero.getEsVocero())) {
+            Prisionero v = (Vocero) prisionero;
+            if(Boolean.TRUE.equals(this.prendido)) {
+                setPrendido(false);
+                v.incrementaContador();
+                return (v.getContador() == Contante.PRISIONEROS - 1);
+            }
+        } else {
+           if (Boolean.TRUE.equals(prisionero.getMarcado()))
+                return true; 
 
-        if (Boolean.TRUE.equals(prisionero.getMarcado()))
-            return true;
-
-        if (Boolean.TRUE.equals(prisionero.getEsVocero()) && (Boolean.FALSE.equals(this.prendido))) {
-            prisionero.incrementaContador();
-            this.prendido = true;  
-                
-            if (Objects.equals(prisionero.getContador(), Contante.PRISIONEROS - 1))
-                return false;    
-            
-            return true;
-        }
-
-        if (Boolean.TRUE.equals(this.prendido)) {
-            this.prendido = false;
-            prisionero.setMarcado(true);
-        }
-        return true;
+           if (Boolean.TRUE.equals(this.prendido)) {
+                this.prendido = false;
+                prisionero.setMarcado(true);
+            }
+        }   
+        return true; 
+//
+//        if (Boolean.TRUE.equals(prisionero.getMarcado()))
+//            return true;
+//
+//        if (Boolean.TRUE.equals(prisionero.getEsVocero()) && (Boolean.FALSE.equals(this.prendido))) {
+//            prisionero.incrementaContador();
+//            this.prendido = true;  
+//                
+//            if (Objects.equals(prisionero.getContador(), Contante.PRISIONEROS - 1))
+//                return false;    
+//            
+//            return true;
+//        }
+//
+//        if (Boolean.TRUE.equals(this.prendido)) {
+//            this.prendido = false;
+//            prisionero.setMarcado(true);
+//        }
+//        return true;
     }
 
     public void setPrendido(Boolean estado) {
