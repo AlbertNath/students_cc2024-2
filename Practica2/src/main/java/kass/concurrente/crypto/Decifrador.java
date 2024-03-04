@@ -46,12 +46,10 @@ public class Decifrador implements Runnable {
         if(password.length() >= 6 && password.length() <= 13) {
             System.out.println(password);
             if(Cifrar.descifraC(key, password)) {
-                synchronized(this){
-                    this.found = true;
-                    System.out.printf("Hilo: %s encontró la contraseña: %s %n", 
-                                       Thread.currentThread().getName(), 
-                                       password);
-                }
+                this.found = true;
+                System.out.printf("Hilo: %s encontró la contraseña: %s %n", 
+                                    Thread.currentThread().getName(), 
+                                    password);
                 return;
            }
             
