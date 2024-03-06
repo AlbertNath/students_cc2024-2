@@ -6,8 +6,11 @@ package kass.concurrente.modelos;
  * @author <PaoPatrol>
  */
 public class Prisionero {
+    /** Identificador del prisionero */
     protected Integer id;
+    /** Bandera para identificar si es vocero */
     protected Boolean esVocero;
+    /** Bandera para indicar si ha pasado */
     protected Boolean marcado;
 
     /**
@@ -22,14 +25,28 @@ public class Prisionero {
         this.marcado = marcado;
     }
 
+    /**
+     * Método que regresa el identificador del prisionero.
+     * @return el identificador del prisionero.
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Método que regresa si el prisionero es vocero.
+     * @return true si es vocero, false en otro caso.
+     */
     public Boolean getEsVocero() {
         return esVocero;
     }
 
+    /**
+     * Método que regresa si el prisionero ha pasado por
+     * la sala.
+     * @return true si ya ha pasado y cambiado el estado
+     * del switch. false en otro caso.
+     */
     public Boolean getMarcado() {
         return marcado;
     }
@@ -38,6 +55,12 @@ public class Prisionero {
         return -1; //!!!!
     }
 
+    /**
+     * Método que establece el estaod del 
+     * prisionero.
+     * @param estado el estaod al que ponerle 
+     * al prisionero.
+     */
     public void setMarcado(Boolean estado) {
         this.marcado = estado;
     }

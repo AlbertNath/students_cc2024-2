@@ -15,8 +15,13 @@ import kass.concurrente.constantes.Contante;
  * @version 1.0
  */
 public class Habitacion {
+    /** Variable booleana que representa el estado
+     * del switch
+     */
     private Boolean prendido;
+    /** Generador de números pseudoaleatorios */
     private Random rnd = new Random();
+    /** Logger */
     final Logger LOG = Logger.getLogger(Habitacion.class.getName());
     private Contante constante;
 
@@ -67,31 +72,22 @@ public class Habitacion {
             }
         }   
         return true; 
-//
-//        if (Boolean.TRUE.equals(prisionero.getMarcado()))
-//            return true;
-//
-//        if (Boolean.TRUE.equals(prisionero.getEsVocero()) && (Boolean.FALSE.equals(this.prendido))) {
-//            prisionero.incrementaContador();
-//            this.prendido = true;  
-//                
-//            if (Objects.equals(prisionero.getContador(), Contante.PRISIONEROS - 1))
-//                return false;    
-//            
-//            return true;
-//        }
-//
-//        if (Boolean.TRUE.equals(this.prendido)) {
-//            this.prendido = false;
-//            prisionero.setMarcado(true);
-//        }
-//        return true;
     }
 
+    /**
+     * Método que establece el interruptor a un 
+     * estado booleano determinado.
+     * @param estado el estado al que poner el 
+     * interruptor,
+     */
     public void setPrendido(Boolean estado) {
         this.prendido = estado;
     }
 
+    /**
+     * Métido que regresa el estado del switch.
+     * @return el estado del switch.
+     */
     public Boolean getPrendido() {
         return this.prendido;
     }

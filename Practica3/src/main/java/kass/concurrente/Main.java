@@ -17,7 +17,7 @@ import static kass.concurrente.constantes.Contante.LOGS;
 /**
  * Clase principal, se ejecuta todo la simulacion
  * Como en el cuento.
- * @author <Equipo>
+ * @author <PaoPatrol>
  * @version 1.0
  */
 public class Main implements Runnable {
