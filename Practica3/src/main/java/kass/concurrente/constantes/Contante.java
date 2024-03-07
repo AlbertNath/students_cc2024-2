@@ -1,11 +1,17 @@
 package kass.concurrente.constantes;
 
+
 /**
  * Clase de constantes que alberga nuestro programa
  * @author Kassandra Mirael
  * @version 1.0
  */
 public class Contante {
+
+    private Contante() {
+       
+    }
+
     public static final Integer PRISIONEROS = 5;
     public static final Boolean LOGS = true;
     public static final Integer DIEZ_SEGUNDOS = 10000;

@@ -11,12 +11,8 @@ import kass.concurrente.modelos.Habitacion;
 import kass.concurrente.modelos.Prisionero;
 import kass.concurrente.modelos.Vocero;
 
-import static kass.concurrente.constantes.Contante.AZUL;
-import static kass.concurrente.constantes.Contante.LOGS;
-
 /**
- * Clase principal, se ejecuta todo la simulacion
- * Como en el cuento.
+ * Clase principal, se ejecuta toda la simulacion como en el cuento.
  * @author <PaoPatrol>
  * @version 1.0
  */
@@ -25,6 +21,7 @@ public class Main implements Runnable {
     Lock lock; 
     public volatile List<Prisionero> prisioneros;    
     private volatile Boolean stop;
+    final Logger logger = Logger.getLogger(Main.class.getName());
     private Habitacion h;
     public Main(){
         lock = new ReentrantLock();
@@ -48,15 +45,14 @@ public class Main implements Runnable {
     public void run() {
         while(Boolean.TRUE.equals(this.stop)){
             Integer id = Integer.valueOf(Thread.currentThread().getName());
-            //LOG.info(Con "Hilo entrante: " + id);
             try {
                 this.lock.lock();
                 if (Boolean.TRUE.equals(this.stop))
                     this.stop = h.entraHabitacion(prisioneros.get(id));
                 this.lock.unlock();     
-            //System.out.printf("Estado del hilo %d (%b): %s\n", id, prisioneros.get(id).getEsVocero() , this.stop);
-            System.out.println("Hilo saliente: " + id);
+            logger.info("Hilo saliente:  " + id);
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 e.printStackTrace();
             }   
         }
@@ -86,11 +82,8 @@ public class Main implements Runnable {
         for(Thread th : threads){
             try {
                 th.join();
-            } catch (InterruptedException e) {e.printStackTrace();}
+            } catch (InterruptedException e) {e.printStackTrace();
+             Thread.currentThread().interrupt();}
         }
-
-        final Logger LOG = Logger.getLogger(Main.class.getName()); // EJEMPLO LOGGER
-
-        //if(LOGS) LOG.info("HOLA SOY UN MENSAJE");
     }
 }

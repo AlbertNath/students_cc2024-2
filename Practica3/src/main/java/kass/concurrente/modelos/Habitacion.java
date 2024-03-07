@@ -1,6 +1,5 @@
 package kass.concurrente.modelos;
 
-import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Logger;
 
@@ -22,8 +21,7 @@ public class Habitacion {
     /** Generador de números pseudoaleatorios */
     private Random rnd = new Random();
     /** Logger */
-    final Logger LOG = Logger.getLogger(Habitacion.class.getName());
-    private Contante constante;
+    final Logger logger = Logger.getLogger(Habitacion.class.getName());
 
     /**
      * Metodo Constructor
@@ -31,7 +29,7 @@ public class Habitacion {
      */
     public Habitacion(){
         this.prendido = (this.rnd.nextInt(2) == 1);
-        LOG.info("Habitación inicia con estado: " + this.prendido);
+        logger.info("Habitación inicia con estado: " + this.prendido);
     }
 
     /**
@@ -47,14 +45,14 @@ public class Habitacion {
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
         Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
         if (Boolean.TRUE.equals(prisionero.getEsVocero())) {
-            prisionero = (Vocero) prisionero;
+            Vocero v = (Vocero) prisionero;
+            
             if(Boolean.TRUE.equals(this.prendido)) {
-                System.out.println("Apagando");
+                logger.info("Apagando ...");
                 setPrendido(false);
-                prisionero.incrementaContador();
-                //System.out.println(prisionero.getContador() );
-                if (prisionero.getContador() == Contante.PRISIONEROS - 1) {
-                    LOG.info(Contante.ROJO + "TODOS PASARON!!!" + Contante.RESET);
+                v.incrementaContador();
+                if (v.getContador() == Contante.PRISIONEROS - 1) {
+                    logger.info(Contante.ROJO + "TODOS PASARON!!!" + Contante.RESET);
                     return false;
                 }
             }
@@ -62,11 +60,10 @@ public class Habitacion {
             if (Boolean.TRUE.equals(prisionero.getMarcado()))
                 return true; 
 
-            LOG.info(Contante.AZUL + "Prisionero: " + prisionero.getId() +  Contante.RESET);
-            LOG.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
-            //System.out.println("Prendiendo (Hilo " + prisionero.getId() +")");
+            logger.info(Contante.AZUL + "Prisionero: " + prisionero.getId() +  Contante.RESET);
+            logger.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
             if (Boolean.FALSE.equals(this.prendido)) {
-                LOG.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
+                logger.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);
                 setPrendido(true);
                 prisionero.setMarcado(true);
             }

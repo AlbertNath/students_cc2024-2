@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class HabitacionTest {
     Habitacion h;
     Prisionero p;
-    Prisionero v;
+    Vocero v;
 
     @BeforeEach
     void setUp(){

@@ -51,9 +51,7 @@ public class Prisionero {
         return marcado;
     }
 
-    public Integer getContador() {
-        return -1; //!!!!
-    }
+    
 
     /**
      * Método que establece el estaod del 
@@ -64,8 +62,5 @@ public class Prisionero {
     public void setMarcado(Boolean estado) {
         this.marcado = estado;
     }
-
-    public void incrementaContador() {
-        
-    }
+ 
 }
