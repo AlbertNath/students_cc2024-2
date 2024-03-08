@@ -22,12 +22,17 @@ public class Vocero extends Prisionero{
         //Completar y hacer documentacion
     }
    
-    
+    /**
+     * Obtiene el contador 
+     * @return contador
+     */
     public Integer getContador() {
         return this.contador;
     }
-
     
+    /***
+     * Aumenta el contador
+     */
     public void incrementaContador() {
         this.contador++;
     }

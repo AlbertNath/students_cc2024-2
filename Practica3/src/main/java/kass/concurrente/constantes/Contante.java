@@ -8,6 +8,9 @@ package kass.concurrente.constantes;
  */
 public class Contante {
 
+    /**
+     * Crea una instancia privada de la clase
+     */
     private Contante() {
        
     }
