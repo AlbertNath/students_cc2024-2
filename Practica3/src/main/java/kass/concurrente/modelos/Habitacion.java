@@ -46,20 +46,33 @@ public class Habitacion {
     public Boolean entraHabitacion(Prisionero prisionero) throws InterruptedException{
         Thread.sleep(this.rnd.nextLong(Contante.CINCO_SEGUNDOS));
         if (Boolean.TRUE.equals(prisionero.getEsVocero())) {
+
             Vocero v = (Vocero) prisionero;
-            
-            if(Boolean.TRUE.equals(this.prendido)) {
+
+            /* Solo se podrá iniciar a contar cuando el vocero pase por primera vez y 
+            apague el interruptor para asegurarse de que no incie prendido y cuente a 
+            un prisionero de más. */
+            if (Boolean.FALSE.equals(v.getMarcado())) {
+
+                v.setMarcado(true);
+                v.incrementaContador();
                 logger.info("Apagando ...");
                 setPrendido(false);
-                v.incrementaContador();
-                if (v.getContador() == Contante.PRISIONEROS - 1) {
-                    logger.info(Contante.ROJO + "TODOS PASARON!!!" + Contante.RESET);
-                    return false;
-                }
+                return true;
+
+            } else if(Boolean.TRUE.equals(this.prendido)) {
+
+                    logger.info("Apagando ...");
+                    setPrendido(false);
+                    v.incrementaContador();
+                    if (Contante.PRISIONEROS.equals(v.getContador())) {
+                        logger.info(Contante.ROJO + "TODOS PASARON!!!" + Contante.RESET);
+                        return false;
+                    }
             }
-        } else {
-            if (Boolean.TRUE.equals(prisionero.getMarcado()))
-                return true; 
+
+        
+        } else if (Boolean.FALSE.equals(prisionero.getMarcado())) {
 
             logger.info(Contante.AZUL + "Prisionero: " + prisionero.getId() +  Contante.RESET);
             logger.info(Contante.AZUL + "larali larala laralu" + Contante.RESET);

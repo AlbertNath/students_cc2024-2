@@ -29,7 +29,7 @@ public class Vocero extends Prisionero{
     public Integer getContador() {
         return this.contador;
     }
-    
+
     /***
      * Aumenta el contador
      */
