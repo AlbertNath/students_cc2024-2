@@ -19,7 +19,7 @@ import kass.concurrente.modelos.Vocero;
 public class Main implements Runnable {
 
     Lock lock; 
-    public volatile List<Prisionero> prisioneros;    
+    private List<Prisionero> prisioneros;    
     private volatile Boolean stop;
     final Logger logger = Logger.getLogger(Main.class.getName());
     private Habitacion h;
@@ -28,7 +28,6 @@ public class Main implements Runnable {
         this.prisioneros = new ArrayList<>();
         this.h = new Habitacion();
         this.stop = true;
-        //Agregar lo que haga falta para que funcione
     }
 
     /*
@@ -50,7 +49,8 @@ public class Main implements Runnable {
                 if (Boolean.TRUE.equals(this.stop))
                     this.stop = h.entraHabitacion(prisioneros.get(id));
                 this.lock.unlock();     
-            logger.info("Hilo saliente:  " + id);
+            String info = "Hilo saliente: " +  id;
+            logger.info(info);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 e.printStackTrace();

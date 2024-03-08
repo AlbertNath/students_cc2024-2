@@ -29,7 +29,8 @@ public class Habitacion {
      */
     public Habitacion(){
         this.prendido = (this.rnd.nextInt(2) == 1);
-        logger.info("Habitación inicia con estado: " + this.prendido);
+        String info = "Habitación inicia con estado: " + this.prendido;
+        logger.info(info);
     }
 
     /**
