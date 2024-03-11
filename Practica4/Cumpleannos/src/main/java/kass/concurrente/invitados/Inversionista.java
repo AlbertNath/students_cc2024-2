@@ -1,6 +1,7 @@
 package kass.concurrente.invitados;
 
 import kass.concurrente.tenedor.Tenedor;
+import kass.concurrente.tenedor.TenedorImpl;
 
 /**
  * Clase abstracta que modela al inversionista.
@@ -12,12 +13,32 @@ import kass.concurrente.tenedor.Tenedor;
  */
 public abstract class Inversionista implements Runnable {
 
+    private Tenedor t1 = new TenedorImpl(1);
+    private Tenedor t2 = new TenedorImpl(2);
+    private static Integer ID = 0;
+    private Integer vecesComido;
+
+    protected Inversionista(){
+        this.vecesComido = 0;
+        this.ID ++;
+    }
+
     @Override
     public void run() {
         /**
          * El inversionista debe pensar y entrar a la mesa un periodo de veces
          * puesto en el test, agrega el valor aqui.
          */
+
+         for (int i = 0; i < 5; i++) {
+            try {
+                piensa();
+                entraALaMesa();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
     }
 
     /**
@@ -30,9 +51,9 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException <Escribe porque se lanzaria esta exception>
      */
     public void entraALaMesa() throws InterruptedException{
-        /**
-         * Aqui va tu codigo
-         */
+        tomaTenedores();
+        come();
+        sueltaTenedores();
     }
 
     /**
@@ -47,6 +68,10 @@ public abstract class Inversionista implements Runnable {
         /**
          * Aqui va tu codigo
          */
+        System.out.println("Inversionista " + ID + " está comiendo ñam ñam...");
+        Thread.sleep(generaTiempoDeEspera());
+        this.vecesComido++;
+        System.out.println("Inversionista " + ID + " ha comido. Total de veces comidas: " + vecesComido);
     }
 
     /**
@@ -59,6 +84,9 @@ public abstract class Inversionista implements Runnable {
         /**
          * Aqui va tu codigo
          */
+        System.out.println("Inversionista " + ID + " está pensando...");
+        Thread.sleep(generaTiempoDeEspera());
+        System.out.println("Inversionista " + ID + " ha terminado de pensar.");
     }
 
     /**
@@ -98,7 +126,7 @@ public abstract class Inversionista implements Runnable {
     }
 
     public Tenedor getTenedorIzq(){
-        return null;
+        return this.t1;
     }
 
     public void setTenedorIzq(Tenedor t){
@@ -106,7 +134,7 @@ public abstract class Inversionista implements Runnable {
     }
 
     public Tenedor getTenedorDer(){
-        return null;
+        return this.t2;
     }
 
     public void setTenedorDer(Tenedor t){
@@ -114,7 +142,7 @@ public abstract class Inversionista implements Runnable {
     }
 
     public int getVecesComido(){
-        return 0;
+        return this.vecesComido;
     }
 
     public void setVecesComido(int vecesComido){

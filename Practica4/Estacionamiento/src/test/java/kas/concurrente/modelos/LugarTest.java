@@ -38,6 +38,24 @@ public class LugarTest {
      * AGREGA 2 TEST MAS
      * TEST bien hechos
      */
+
+     void initHilos() {
+        hilos = new ArrayList<>();
+
+        for (int i = 0; i < EstacionamientoTest.NUMLUGARES * 2; ++i) {
+            Thread t = new Thread(this::simulaCS, "" + i);
+            hilos.add(t);
+        }
+    }
+
+    void simulaCS() {
+        try {
+            int id = Integer.parseInt(Thread.currentThread().getName());
+            System.out.println("Carro " + id + " entrando...");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

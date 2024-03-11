@@ -9,44 +9,48 @@ package kass.concurrente.tenedor;
  */
 public class TenedorImpl implements Tenedor {
 
+    private Integer tomado;
+    private Integer ID;
+
     public TenedorImpl(int id){
+        this.ID = id;
+        this.tomado = 0;
 
     }
 
     @Override
     public void tomar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tomar'");
+        this.tomado++;
+        System.out.println("El tenedor " + this.ID + " ha sido tomado.");
     }
 
     @Override
     public void soltar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'soltar'");
+        System.out.println("El tenedor " + this.ID + " ha sido soltado.");
     }
 
     @Override
     public int getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return ID;
+        
     }
 
     @Override
     public int getVecesTomado() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'vecesTomado'");
+        return this.tomado;
+       
     }
 
     @Override
     public void setId(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+        this.ID = id ;
+        
     }
 
     @Override
     public void setVecesTomado(int vecesTomado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setVecesTomado'");
+        this.tomado = vecesTomado;
+        
     }
     
 }

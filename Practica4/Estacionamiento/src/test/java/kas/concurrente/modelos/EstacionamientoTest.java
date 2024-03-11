@@ -34,7 +34,10 @@ public class EstacionamientoTest {
     @Test
     void conteoVecesEstacionado() throws InterruptedException{
         for(int i = 0; i < NUMLUGARES; i++){
-            es.getLugares()[i].estaciona();
+            for(int j = 0 ; j< NUMLUGARES ; j++){
+                es.getLugares()[i][j].estaciona();
+            }
+          
         }
         assertEquals(NUMLUGARES, verificaVecesEstacionado());
     }
@@ -54,8 +57,11 @@ public class EstacionamientoTest {
 
     int verificaVecesEstacionado(){
         int res = 0;
-        for(int i = 0; i < es.getLugares().length; ++i){
-            res += es.getLugares()[i].getVecesEstacionado();
+        for(int i = 0; i < es.getLugares().length; ++i){ 
+            for (int j = 0; j < es.getLugares()[i].length; j++) {
+                res += es.getLugares()[i][j].getVecesEstacionado();
+            }
+           
         }
 
         return res;

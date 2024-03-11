@@ -1,5 +1,7 @@
 package kas.concurrente.modelos;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Clase que modela un Lugar
  * El lugar consta de un id
@@ -10,6 +12,9 @@ package kas.concurrente.modelos;
  */
 public class Lugar {
     private Integer id;
+    private boolean disponible;
+    private Semaphore semaforo;
+    private Integer vecesEstacionado;
 
     /**
      * Metodo constructor
@@ -20,6 +25,9 @@ public class Lugar {
      * @param id El id del Lugar
      */
     public Lugar(int id){
+        this.id = id;
+        this.disponible = true;
+       
     }
 
     /**
@@ -31,9 +39,13 @@ public class Lugar {
      * @throws InterruptedException Si algo falla
      */
     public void estaciona() throws InterruptedException{
-        /*
-         * Aui va tu codigo
-         */
+        semaforo.acquire();
+        disponible = false;
+        vecesEstacionado ++;
+        System.out.println("El carro está estacionado en el lugar " + id);
+        semaforo.release();
+        vePorPastel();
+        
     }
 
     /**
@@ -43,9 +55,29 @@ public class Lugar {
      * @throws InterruptedException En caso de que falle
      */
     public void vePorPastel() throws InterruptedException{
-        /*
-         * Aqui va tu codigo
-         */
+        semaforo.acquire();
+        int tiempoEspera = (int) (Math.random() * 5) + 1;
+        Thread.sleep(tiempoEspera * 1000);
+        System.out.println("¡Saliendo del lugar " + id + " para ir a por pastel!");
+        semaforo.release();
     }
+
+    public int getId (){
+        return id;
+    } 
+
+    public boolean getDisponible() {
+        return disponible;
+    }
+
+    public Integer getVecesEstacionado(){
+        return vecesEstacionado;
+    }
+
+    // ???
+    public Boolean getFiltroModificado() {
+        return false;
+    }
+
     
 }
