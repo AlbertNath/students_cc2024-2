@@ -86,7 +86,7 @@ public class Matrices implements Runnable {
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[0].length; j++) {
-                res.append(String.format("%4d", matriz[i][j])); // Alineación de 4 caracteres
+                res.append(String.format("%4d\t", matriz[i][j])); // Alineación de 4 caracteres
             }
             res.append("\n");
         }
