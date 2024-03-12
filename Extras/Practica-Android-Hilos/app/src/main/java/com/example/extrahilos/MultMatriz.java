@@ -3,7 +3,6 @@ package com.example.extrahilos;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -26,38 +25,45 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MainActivity extends AppCompatActivity {
+public class MultMatriz extends AppCompatActivity {
     EditText num_hilos;
     EditText edit_matriz;
-    Button botonMat;
-    Button botonCont;
+    Button boton;
     TextView resultado;
     //Matrices matriz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mult_matriz);
         String ubicacion = "";
         InputStream is1000 = this.getResources().openRawResource(R.raw.mat1000);//Cambiar nombres por el de otras matrices
 
-        //num_hilos = (EditText) findViewById(R.id.eje);
-        //edit_matriz = (EditText) findViewById(R.id.edit_matriz);
-        botonMat = (Button) findViewById(R.id.ejecutarMatMult);
-        botonCont = (Button) findViewById(R.id.ejecutarContador);
+        num_hilos = (EditText) findViewById(R.id.edit_num_hilos);
+        edit_matriz = (EditText) findViewById(R.id.edit_matriz);
+        boton = (Button) findViewById(R.id.ejecutar);
+        resultado = (TextView) findViewById(R.id.resultado);
 
-        botonMat.setOnClickListener(new View.OnClickListener() {
+        boton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MultMatriz.class);
-                startActivity(intent);
-            }
-        });
-
-        botonCont.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                String hilos = ""+num_hilos.getText();
+                String mat = "" + edit_matriz.getText();
+                String res = "";
+                try{
+                    //leemos las matrices
+                    //creamos el objeto
+                    //Si es secuencial tomamos tiempo con 1 hilo
+                    //En otro caso tomamos tiempo con los hilos puestos
+                    //List<Thread> hilosL = new ArrayList<>()
+                    int[][] matA = leer(mat);
+                    int[][] matB = leer(mat);
+                    res = Matrices.ejecuta(Integer.parseInt(num_hilos.getText().toString()), matA, matB);
+                    resultado.setText(res);
+                }catch (InterruptedException | IOException e){//La primer excepcion va, la segunda dependiendo de como leyeron su archvio
+                    e.printStackTrace();
+                }
             }
         });
     }
