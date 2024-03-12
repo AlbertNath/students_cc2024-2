@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         botonCont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, Contadoractivity.class);
+                startActivity(intent);
             }
         });
     }

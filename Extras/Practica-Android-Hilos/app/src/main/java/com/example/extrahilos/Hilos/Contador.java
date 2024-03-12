@@ -7,7 +7,7 @@ public class Contador implements Runnable{
     @Override
     public void run(){
         for(int i = 0; i < rondas; ++i){
-            ++contador;
+            contador++;
         }
     }
 
@@ -15,5 +15,9 @@ public class Contador implements Runnable{
         for(int i = 0; i < rondas; ++i){
             ++contador;
         }
+    }
+
+    public int getContador() {
+        return this.contador;
     }
 }

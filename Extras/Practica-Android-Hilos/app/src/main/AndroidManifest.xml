@@ -12,14 +12,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExtraHilos"
         tools:targetApi="31">
-        <activity android:name=".MultMatriz"
+        <activity
+            android:name=".Contadoractivity"
+            android:exported="false" />
+        <activity
+            android:name=".MultMatriz"
             android:exported="false"
             android:label="@string/multiplica_matriz"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.extrahilos.MainActivity"
-                />
+                android:value="com.example.extrahilos.MainActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
