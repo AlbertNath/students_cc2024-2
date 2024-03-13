@@ -62,49 +62,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public int[][] procesaMat(InputStream is, int size) {
-        BufferedReader raw = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-        List<String> lines = new ArrayList<>();
-        try {
-            for(String l; (l = raw.readLine()) != null; lines.add(l));
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-
-        //int[][] resMat = new int[lines.size()][lines.get(0).split(" ").length];
-        int[][] resMat = new int[size][size];
-        for (int i = 0; i < size; i++) {
-            String[] tmp = lines.get(i).split(" ");
-            for(int j = 0; j < size; j++) {
-                resMat[i][j] = Integer.parseInt(tmp[j]);
-            }
-        }
-        return resMat;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public int[][] leer(String mat) throws  IOException {
-        //List<String> mats = Arrays.asList("10", "100", "1000");
-        //if (!mats.contains(mat))
-        //    throw new IOException("Matriz no existente");
-        int size = 0;
-        switch (mat) {
-            case "10":
-                size = R.raw.mat10;
-                break;
-            case "100":
-                size = R.raw.mat100;
-                break;
-            case "1000":
-                size = R.raw.mat1000;
-                break;
-            default:
-                throw new IOException("Matriz no existente");
-        }
-
-        InputStream is = this.getResources().openRawResource(size);//actualicen esto, para poner cualquier archvio
-        return procesaMat(is, Integer.parseInt(mat));
-    }
 }

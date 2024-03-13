@@ -23,6 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class MultMatriz extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class MultMatriz extends AppCompatActivity {
             public void onClick(View view) {
                 String hilos = ""+num_hilos.getText();
                 String mat = "" + edit_matriz.getText();
-                String res = "";
+                long res = 0;
                 try{
                     //leemos las matrices
                     //creamos el objeto
@@ -60,7 +61,7 @@ public class MultMatriz extends AppCompatActivity {
                     int[][] matA = leer(mat);
                     int[][] matB = leer(mat);
                     res = Matrices.ejecuta(Integer.parseInt(num_hilos.getText().toString()), matA, matB);
-                    resultado.setText(res);
+                    resultado.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(res)));
                 }catch (InterruptedException | IOException e){//La primer excepcion va, la segunda dependiendo de como leyeron su archvio
                     e.printStackTrace();
                 }

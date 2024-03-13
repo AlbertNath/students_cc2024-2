@@ -129,7 +129,7 @@ public class Matrices implements Runnable {
      * @param mA primera matriz con la que oprerar.
      * @param mB segunda matriz con la que oprerar.
      */
-    public static String ejecuta(int numHilos, int[][] mA, int[][] mB) throws InterruptedException {
+    public static long ejecuta(int numHilos, int[][] mA, int[][] mB) throws InterruptedException {
         String linea = "————————————————————————————————————————————————————————";
         String msg = "\nPrueba paralela con %d hilo";
         msg += (numHilos == 1) ? " | secuencial \n" : "s \n";
@@ -150,6 +150,6 @@ public class Matrices implements Runnable {
         String res = imprimirMatriz(m.resultado);
         System.out.println(res);
         System.out.println(linea);
-        return res;
+        return et;
     }
 }
