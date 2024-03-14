@@ -52,8 +52,8 @@ public class MesaTest {
         inicializaInversionistasYCubierto(InversionistaFiltro.class);
 
         boolean comieronTodasLasVeces = true;
-
         for(Inversionista in : inversionistas){
+            System.out.println(in.getVecesComido());
             comieronTodasLasVeces = comieronTodasLasVeces && (in.getVecesComido() >= VECES_COMIDOD_ESPERADO && 
             in.getVecesComido() <= in.getTenedorIzq().getVecesTomado() && 
             in.getVecesComido() <= in.getTenedorDer().getVecesTomado());
@@ -93,6 +93,8 @@ public class MesaTest {
     }
 
     void ejecutaHilos() throws InterruptedException {
+        System.out.println("AQUIIIIIIIIIIIIIII");
+        System.out.println(InversionistaFiltro.class.getName());
         for(Thread t : hilos){
             t.start();
         }

@@ -11,16 +11,24 @@ import kass.concurrente.candados.Lock;
  */
 public class PetersonLock implements Lock {
 
+    private volatile boolean[] flag = new boolean[2];
+    private volatile int victim;
+
     @Override
     public void lock() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'lock'");
+        int i = Integer.parseInt(Thread.currentThread().getName());
+        int j = 1 - i;
+        flag[i] = true; // I'm interested
+        victim = i; // you go first
+        while (flag[j] && victim == i) {
+            // wait
+        }
     }
 
     @Override
     public void unlock() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'unlock'");
+        int i = Integer.parseInt(Thread.currentThread().getName());
+        flag[i] = false; // I'm not interested
     }
     
 }

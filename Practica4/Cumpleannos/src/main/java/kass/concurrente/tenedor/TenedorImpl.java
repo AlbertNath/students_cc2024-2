@@ -1,5 +1,7 @@
 package kass.concurrente.tenedor;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Clase que implementa el tenedor
  * Tenemos una variable entera que cuenta el numero de veces que fue tomado
@@ -9,44 +11,60 @@ package kass.concurrente.tenedor;
  */
 public class TenedorImpl implements Tenedor {
 
-    public TenedorImpl(int id){
+    private volatile Integer vecesTomado;
+    private volatile boolean tomado;
+    private Integer ID;
+    private Semaphore semaforo = new Semaphore(1);
 
+    public TenedorImpl(int id){
+        this.ID = id;
+        this.vecesTomado = 0;
+        this.tomado = false;
     }
 
     @Override
     public void tomar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tomar'");
+        try {
+            semaforo.acquire();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        tomado = true;
+        this.vecesTomado++;
+        System.out.println("El tenedor " + this.ID + " ha sido tomado.");
+
     }
 
     @Override
     public void soltar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'soltar'");
+        semaforo.release();
+        tomado = false;
+        System.out.println("El tenedor " + this.ID + " ha sido soltado.");  
     }
 
     @Override
     public int getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+        return ID;
+        
     }
 
     @Override
     public int getVecesTomado() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'vecesTomado'");
+        return this.vecesTomado;
+       
     }
 
     @Override
     public void setId(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+        this.ID = id ;
+        
     }
 
     @Override
     public void setVecesTomado(int vecesTomado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setVecesTomado'");
+        this.vecesTomado = vecesTomado;
+        
     }
     
 }

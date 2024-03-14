@@ -9,22 +9,31 @@ package kas.concurrente.modelos;
  */
 public class Estacionamiento {
 
+    private Lugar[][] lugares;
+    private volatile int lugaresDisponibles;
+
     /**
      * Metodo constructor
      * Modifica el constructor o crea otro segun consideres necesario
      * @param capacidad La capacidad del estacionamiento
      */
-    public Estacionamiento(int capacidad){
-        /**
-         * Aqui va tu codigo
-         */
+    public Estacionamiento(int pisos, int capacidadPiso){
+        lugares = new Lugar[pisos][capacidadPiso];
+        for (int i = 0; i < pisos; i++) {
+            //lugares[i] = new Lugar[capacidadPiso];
+            for (int j = 0; j < capacidadPiso; j++) {
+                lugares[i][j] = new Lugar(i * capacidadPiso + j);                
+            }
+        }
+        this.lugaresDisponibles = pisos * capacidadPiso;
     }
 
     public int getLugaresDisponibles() {
-        return -1;
+        return lugaresDisponibles;
     }
 
     public void setLugaresDisponibles(int lugaresDisponibles) {
+        this.lugaresDisponibles = lugaresDisponibles;
     }
 
     /**
@@ -32,7 +41,7 @@ public class Estacionamiento {
      * @return true si esta lleno, false en otro caso
      */
     public boolean estaLleno(){
-        return false;//Le mueven, es pa que compile
+        return lugaresDisponibles == 0;
     }
 
     /**
@@ -40,9 +49,7 @@ public class Estacionamiento {
      * Este es un método optativo
      */
     public void inicializaLugares(){
-        /**
-         * Aqui va tu codigo
-         */
+       
     }
 
     /**
@@ -52,9 +59,10 @@ public class Estacionamiento {
      * @throws InterruptedException Si llega a fallar
      */
     public void entraCarro(int nombre) throws InterruptedException{
-        /**
-         * Aqui va tu codigo
-         */
+        int lugar = obtenLugar();
+        asignaLugar(lugar);
+        System.out.println("El carro " + nombre + " ha entrado al estacionamiento");
+       
     }
 
     /**
@@ -63,9 +71,11 @@ public class Estacionamiento {
      * @throws InterruptedException
      */
     public void asignaLugar(int lugar) throws InterruptedException {
-        /**
-         * Aqui va tucodigo
-         */
+        int piso = lugar / lugares[0].length;
+        int lugarPiso = lugar % lugares[0].length;
+        Lugar lugarI = lugares[piso][lugarPiso];
+        lugarI.estaciona();
+        lugaresDisponibles--;
     }
 
     /**
@@ -75,9 +85,10 @@ public class Estacionamiento {
      * @return Retorna el indice del lugar
      */
     public int obtenLugar(){
-        /**
-         * Aqui va tu codigo
-         */
-        return -1;
+        return (int) (Math.random() * (lugares.length * lugares[0].length));
+    }
+
+    public Lugar [][] getLugares(){
+        return lugares;
     }
 }

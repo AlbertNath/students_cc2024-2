@@ -10,12 +10,14 @@ import org.junit.jupiter.api.Test;
 
 public class EstacionamientoTest {
     Estacionamiento es;
-    final static int NUMLUGARES = 200;
+    final static int NUMPISOS = 4;
+    final static int CAPACIDADPISO = 50;
+    final static int NUMLUGARES = NUMPISOS * CAPACIDADPISO;
     List<Thread> hilos;
 
     @BeforeEach
     void setUp(){
-        es = new Estacionamiento(NUMLUGARES);
+        es = new Estacionamiento(NUMPISOS, CAPACIDADPISO);
         initHilos();
     }
 
@@ -33,8 +35,11 @@ public class EstacionamientoTest {
      */
     @Test
     void conteoVecesEstacionado() throws InterruptedException{
-        for(int i = 0; i < NUMLUGARES; i++){
-            es.getLugares()[i].estaciona();
+        for(int i = 0; i < NUMPISOS; i++){
+            for(int j = 0 ; j< CAPACIDADPISO ; j++){
+                es.getLugares()[i][j].estaciona();
+            }
+          
         }
         assertEquals(NUMLUGARES, verificaVecesEstacionado());
     }
@@ -54,8 +59,11 @@ public class EstacionamientoTest {
 
     int verificaVecesEstacionado(){
         int res = 0;
-        for(int i = 0; i < es.getLugares().length; ++i){
-            res += es.getLugares()[i].getVecesEstacionado();
+        for(int i = 0; i < es.getLugares().length; ++i){ 
+            for (int j = 0; j < es.getLugares()[i].length; j++) {
+                res += es.getLugares()[i][j].getVecesEstacionado();
+            }
+           
         }
 
         return res;

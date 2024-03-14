@@ -12,33 +12,63 @@ import kass.concurrente.candados.Semaphore;
  */
 public class Filtro implements Semaphore {
 
-    /**
-     * Constructor del Filtro
-     * @param hilos El numero de Hilos Permitidos
-     * @param maxHilosConcurrentes EL numero de hilos concurrentes simultaneos
-     */
+    private final int hilos;
+    private final int maxHilosConcurrentes;
+    private int[] level;
+    private int[] victim;
+    private int threadsInCritical = 0; // Contador de hilos en la sección crítica
+    
+
     public Filtro(int hilos, int maxHilosConcurrentes) {
-        /**
-         * AQUI VA TU CODIGO
-         */
+        this.hilos = hilos;
+        this.maxHilosConcurrentes = maxHilosConcurrentes;
+        level = new int[hilos];
+        victim = new int[hilos]; 
+        for (int i = 0; i < hilos; i++) {
+            level[i] = 0;
+        }
     }
 
     @Override
     public int getPermitsOnCriticalSection() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPermitsOnCriticalSection'");
+        return maxHilosConcurrentes;
     }
-
+    
     @Override
     public void acquire() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'acquire'");
+        int me = Integer.parseInt(Thread.currentThread().getName());
+        for (int i = 1; i < hilos; i++) { // Intenta adquirir el bloqueo en múltiples niveles simultáneamente
+            level[me] = i;
+            victim[i] = me;
+            // Spin mientras existan conflictos
+            while (hasConflict(me, i)) {};
+        }
+        synchronized (this) {
+            threadsInCritical++; // Incrementa el contador de hilos en la sección crítica
+        }
+        if (threadsInCritical < maxHilosConcurrentes){
+            level[me] = 0 ; // Permite que entre otro hilo más 
+        }
     }
 
     @Override
     public void release() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'release'");
+        int me = Integer.parseInt(Thread.currentThread().getName());
+        synchronized (this) {
+            threadsInCritical--; // Decrementa el contador de hilos en la sección crítica
+        }
+        level[me] = 0;
     }
-    
+
+    private boolean hasConflict(int me, int myLevel) {
+        for (int k = 0; k < level.length; k++) {
+            if (k != me && level[k] >= myLevel && victim[myLevel] == me) {
+                return true; // Existe un conflicto
+            }
+        }
+        return false; // No hay conflictos
+    }
 }
+
+
+
