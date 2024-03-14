@@ -10,22 +10,22 @@ package kas.concurrente.modelos;
 public class Estacionamiento {
 
     private Lugar[][] lugares;
-    private int lugaresDisponibles;
+    private volatile int lugaresDisponibles;
 
     /**
      * Metodo constructor
      * Modifica el constructor o crea otro segun consideres necesario
      * @param capacidad La capacidad del estacionamiento
      */
-    public Estacionamiento(int capacidad){
-        lugares = new Lugar[capacidad][];
-        for (int i = 0; i < capacidad; i++) {
-            lugares[i] = new Lugar[capacidad];
-            for (int j = 0; j < capacidad; j++) {
-                lugares[i][j] = new Lugar(i * capacidad + j);
+    public Estacionamiento(int pisos, int capacidadPiso){
+        lugares = new Lugar[pisos][capacidadPiso];
+        for (int i = 0; i < pisos; i++) {
+            //lugares[i] = new Lugar[capacidadPiso];
+            for (int j = 0; j < capacidadPiso; j++) {
+                lugares[i][j] = new Lugar(i * capacidadPiso + j);                
             }
         }
-       this.lugaresDisponibles = capacidad * capacidad;
+        this.lugaresDisponibles = pisos * capacidadPiso;
     }
 
     public int getLugaresDisponibles() {
@@ -71,9 +71,10 @@ public class Estacionamiento {
      * @throws InterruptedException
      */
     public void asignaLugar(int lugar) throws InterruptedException {
-        int row = obtenLugar();
-        int col = obtenLugar();
-        lugares[row][col].estaciona();
+        int piso = lugar / lugares[0].length;
+        int lugarPiso = lugar % lugares[0].length;
+        Lugar lugarI = lugares[piso][lugarPiso];
+        lugarI.estaciona();
         lugaresDisponibles--;
     }
 
@@ -84,7 +85,7 @@ public class Estacionamiento {
      * @return Retorna el indice del lugar
      */
     public int obtenLugar(){
-        return (int) (Math.random() * (lugaresDisponibles));
+        return (int) (Math.random() * (lugares.length * lugares[0].length));
     }
 
     public Lugar [][] getLugares(){

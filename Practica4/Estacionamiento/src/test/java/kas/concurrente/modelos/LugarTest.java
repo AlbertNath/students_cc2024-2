@@ -1,6 +1,7 @@
 package kas.concurrente.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ public class LugarTest {
     @Test
     void estacionaTest() throws InterruptedException{
         lugar.estaciona();
-        assertTrue(lugar.getDisponible());
+        //assertTrue(lugar.getDisponible());
+        assertFalse(lugar.getDisponible());
     }
 
     /**

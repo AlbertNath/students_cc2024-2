@@ -1,5 +1,9 @@
 package kass.concurrente.invitados;
 
+import java.util.concurrent.Semaphore;
+
+import kass.concurrente.candadosImpl.Filtro;
+
 /**
  * Clase que modela al inversionista, pero esta vez
  * usando el filtro.
@@ -11,23 +15,31 @@ package kass.concurrente.invitados;
  */
 public class InversionistaFiltro extends Inversionista {
 
-    @Override
-    public void entraALaMesa(){
+    private Semaphore filtro;
 
+    public InversionistaFiltro(Semaphore filtro){
+        this.filtro = filtro;
+    }
+
+    @Override
+    public void entraALaMesa() throws InterruptedException{
+        filtro.acquire();
+        tomaTenedores();
+        come();
+        sueltaTenedores();
+        filtro.release();
     }
 
     @Override
     public void tomaTenedores() {
-        /**
-         * Aqui va tu codigo
-         */
+        t1.tomar();
+        t2.tomar();
     }
 
     @Override
     public void sueltaTenedores() {
-        /**
-         * Aqui va tu codigo
-         */
+        t1.soltar();
+        t2.soltar();
     }
     
 }

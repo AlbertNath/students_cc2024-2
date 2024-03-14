@@ -27,7 +27,8 @@ public class Lugar {
     public Lugar(int id){
         this.id = id;
         this.disponible = true;
-       
+        vecesEstacionado = 0;
+        semaforo = new Semaphore(1);
     }
 
     /**
@@ -44,7 +45,7 @@ public class Lugar {
         vecesEstacionado ++;
         System.out.println("El carro está estacionado en el lugar " + id);
         semaforo.release();
-        vePorPastel();
+        //vePorPastel();
         
     }
 
@@ -55,11 +56,12 @@ public class Lugar {
      * @throws InterruptedException En caso de que falle
      */
     public void vePorPastel() throws InterruptedException{
-        semaforo.acquire();
+        //semaforo.acquire();
         int tiempoEspera = (int) (Math.random() * 5) + 1;
         Thread.sleep(tiempoEspera * 1000);
         System.out.println("¡Saliendo del lugar " + id + " para ir a por pastel!");
-        semaforo.release();
+
+        //semaforo.release();
     }
 
     public int getId (){

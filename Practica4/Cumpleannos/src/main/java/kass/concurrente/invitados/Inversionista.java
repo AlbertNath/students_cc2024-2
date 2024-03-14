@@ -1,5 +1,7 @@
 package kass.concurrente.invitados;
 
+import java.util.concurrent.Semaphore;
+
 import kass.concurrente.tenedor.Tenedor;
 import kass.concurrente.tenedor.TenedorImpl;
 
@@ -13,14 +15,20 @@ import kass.concurrente.tenedor.TenedorImpl;
  */
 public abstract class Inversionista implements Runnable {
 
-    private Tenedor t1 = new TenedorImpl(1);
-    private Tenedor t2 = new TenedorImpl(2);
-    private static Integer ID = 0;
-    private Integer vecesComido;
+    // recibir tenedores?
+    //protected Tenedor t1 = new TenedorImpl(1);
+    //protected Tenedor t2 = new TenedorImpl(2);
+    protected Tenedor t1;
+    protected Tenedor t2;
+    protected Integer id;
+    protected Integer vecesComido = 0;
+    // probando
+    protected Semaphore semaforo = new Semaphore(1);
 
+    //?
     protected Inversionista(){
         this.vecesComido = 0;
-        this.ID ++;
+        this.id ++;
     }
 
     @Override
@@ -65,13 +73,12 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException <Escribe porque se lanzaria esta exception>
      */
     public void come() throws InterruptedException{
-        /**
-         * Aqui va tu codigo
-         */
-        System.out.println("Inversionista " + ID + " está comiendo ñam ñam...");
+        System.out.println("Inversionista " + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
+        semaforo.acquire();
         this.vecesComido++;
-        System.out.println("Inversionista " + ID + " ha comido. Total de veces comidas: " + vecesComido);
+        semaforo.release();
+        System.out.println("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 
     /**
@@ -81,12 +88,9 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException <Escribe porque se lanzaria esta exception>
      */
     public void piensa() throws InterruptedException {
-        /**
-         * Aqui va tu codigo
-         */
-        System.out.println("Inversionista " + ID + " está pensando...");
+        System.out.println("Inversionista " + id + " está pensando...");
         Thread.sleep(generaTiempoDeEspera());
-        System.out.println("Inversionista " + ID + " ha terminado de pensar.");
+        System.out.println("Inversionista " + id + " ha terminado de pensar.");
     }
 
     /**
@@ -112,40 +116,67 @@ public abstract class Inversionista implements Runnable {
         return (long)i ;
     }
 
-    /*
-     * Rellena Getter and Setters primero
-     * Documenta los metodos.
-     * Cuando acabes borra estew comentario
+    /**
+     * Metodo que obtiene el ID del inversionista
+     * @return El ID del inversionista
      */
     public int getId(){
-        return 0;
+        return id;
     }
 
+    /**
+     * Metodo que cambia el ID del inversionista
+     * @param id El nuevo ID del inversionista
+     */
     public void setId(int id){
-
+        this.id = id;
     }
 
+    /**
+     * Metodo que obtiene el tenedor izquierdo
+     * @return El tenedor izquierdo
+     */
     public Tenedor getTenedorIzq(){
         return this.t1;
     }
 
+    /**
+     * Metodo que cambia el tenedor izquierdo
+     * @param t El nuevo tenedor izquierdo
+     */
     public void setTenedorIzq(Tenedor t){
-
+        this.t1 = t;
     }
 
+    /**
+     * Metodo que obtiene el tenedor derecho
+     * @return El tenedor derecho
+     */
     public Tenedor getTenedorDer(){
         return this.t2;
     }
 
+    /**
+     * Metodo que cambia el tenedor derecho
+     * @param t El nuevo tenedor derecho
+     */
     public void setTenedorDer(Tenedor t){
-
+        this.t2 = t;
     }
 
+    /**
+     * Metodo que obtiene el número de veces que el inversionita ha comido
+     * @return El número de veces comido
+     */
     public int getVecesComido(){
         return this.vecesComido;
     }
 
+    /**
+     * Metodo que cambia el número de veces que el inversionita ha comido
+     * @param vecesComido El nuevo número de veces comido
+     */
     public void setVecesComido(int vecesComido){
-        
+        this.vecesComido = vecesComido;
     }
 }

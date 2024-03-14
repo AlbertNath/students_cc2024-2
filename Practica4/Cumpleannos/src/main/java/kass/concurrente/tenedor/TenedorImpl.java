@@ -1,5 +1,7 @@
 package kass.concurrente.tenedor;
 
+import java.util.concurrent.Semaphore;
+
 /**
  * Clase que implementa el tenedor
  * Tenemos una variable entera que cuenta el numero de veces que fue tomado
@@ -9,24 +11,36 @@ package kass.concurrente.tenedor;
  */
 public class TenedorImpl implements Tenedor {
 
-    private Integer tomado;
+    private volatile Integer vecesTomado;
+    private volatile boolean tomado;
     private Integer ID;
+    private Semaphore semaforo = new Semaphore(1);
 
     public TenedorImpl(int id){
         this.ID = id;
-        this.tomado = 0;
-
+        this.vecesTomado = 0;
+        this.tomado = false;
     }
 
     @Override
     public void tomar() {
-        this.tomado++;
+        try {
+            semaforo.acquire();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        tomado = true;
+        this.vecesTomado++;
         System.out.println("El tenedor " + this.ID + " ha sido tomado.");
+
     }
 
     @Override
     public void soltar() {
-        System.out.println("El tenedor " + this.ID + " ha sido soltado.");
+        semaforo.release();
+        tomado = false;
+        System.out.println("El tenedor " + this.ID + " ha sido soltado.");  
     }
 
     @Override
@@ -37,7 +51,7 @@ public class TenedorImpl implements Tenedor {
 
     @Override
     public int getVecesTomado() {
-        return this.tomado;
+        return this.vecesTomado;
        
     }
 
@@ -49,7 +63,7 @@ public class TenedorImpl implements Tenedor {
 
     @Override
     public void setVecesTomado(int vecesTomado) {
-        this.tomado = vecesTomado;
+        this.vecesTomado = vecesTomado;
         
     }
     
