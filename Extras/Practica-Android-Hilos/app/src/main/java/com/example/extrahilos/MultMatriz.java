@@ -61,7 +61,7 @@ public class MultMatriz extends AppCompatActivity {
                     int[][] matA = leer(mat);
                     int[][] matB = leer(mat);
                     res = Matrices.ejecuta(Integer.parseInt(num_hilos.getText().toString()), matA, matB);
-                    resultado.setText(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(res)));
+                    resultado.setText(String.valueOf((double)res / 1_000_000_000));
                 }catch (InterruptedException | IOException e){//La primer excepcion va, la segunda dependiendo de como leyeron su archvio
                     e.printStackTrace();
                 }

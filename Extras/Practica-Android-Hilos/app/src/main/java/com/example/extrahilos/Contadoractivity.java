@@ -54,6 +54,7 @@ public class Contadoractivity extends AppCompatActivity {
                 }
                 String res = String.valueOf(c.getContador());
                 resultado.setText(res);
+                c.resetContador();
 
             }
         });
