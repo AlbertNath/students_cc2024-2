@@ -93,7 +93,6 @@ public class MesaTest {
     }
 
     void ejecutaHilos() throws InterruptedException {
-        System.out.println("AQUIIIIIIIIIIIIIII");
         System.out.println(InversionistaFiltro.class.getName());
         for(Thread t : hilos){
             t.start();

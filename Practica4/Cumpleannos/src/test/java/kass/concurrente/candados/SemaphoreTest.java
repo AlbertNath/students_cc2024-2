@@ -51,7 +51,7 @@ public class SemaphoreTest {
             this.atomicInteger.decrementAndGet();
             semaforo.release();
         }
-         System.out.printf("%s valor alcanzado %d\n", Thread.currentThread().getName(), valor);
+        System.out.printf("%s valor alcanzado %d\n", Thread.currentThread().getName(), valor);
     }
 
     Integer simulaCS(Double iteraciones){
