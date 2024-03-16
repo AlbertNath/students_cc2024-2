@@ -78,9 +78,11 @@ public abstract class Inversionista implements Runnable {
     public void come() throws InterruptedException{
         System.out.println("Inversionista " + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
-        semaforo.acquire();
+        //semaforo.acquire();
+        this.tomaTenedores();
         this.vecesComido++;
-        semaforo.release();
+        this.sueltaTenedores();
+        //semaforo.release();
         System.out.println("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 

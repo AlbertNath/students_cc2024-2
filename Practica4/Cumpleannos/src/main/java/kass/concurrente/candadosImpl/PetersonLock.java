@@ -28,7 +28,7 @@ public class PetersonLock implements Lock {
     @Override
     public void unlock() {
         int i = Integer.parseInt(Thread.currentThread().getName());
-        flag[i] = false; // I'm not interested
+        flag[i % 2] = false; // I'm not interested
     }
     
 }

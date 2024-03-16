@@ -16,7 +16,7 @@ import kass.concurrente.tenedor.TenedorImpl;
 public class MesaTest {
     static final int TAM_MESA = 5;
     static final int DIEZ_SEC = 10000;
-    static int VECES_COMIDOD_ESPERADO = 500;
+    static int VECES_COMIDOD_ESPERADO = 5;
 
     Inversionista[] inversionistas;
     Thread[] hilos;

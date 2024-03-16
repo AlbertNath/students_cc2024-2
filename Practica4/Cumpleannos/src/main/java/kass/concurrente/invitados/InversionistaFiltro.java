@@ -25,9 +25,9 @@ public class InversionistaFiltro extends Inversionista {
     @Override
     public void entraALaMesa() throws InterruptedException{
         filtro.acquire();
-        tomaTenedores();
+        //tomaTenedores();
         come();
-        sueltaTenedores();
+        //sueltaTenedores();
         filtro.release();
     }
 
