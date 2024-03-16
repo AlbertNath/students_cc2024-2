@@ -1,6 +1,7 @@
 package kass.concurrente.invitados;
 
-import java.util.concurrent.Semaphore;
+//import java.util.concurrent.Semaphore;
+import kass.concurrente.candados.Semaphore;
 
 import kass.concurrente.candadosImpl.Filtro;
 

@@ -1,9 +1,11 @@
 package kass.concurrente.invitados;
 
-import java.util.concurrent.Semaphore;
+//import java.util.concurrent.Semaphore;
+import kass.concurrente.candados.Semaphore;
 
 import kass.concurrente.tenedor.Tenedor;
 import kass.concurrente.tenedor.TenedorImpl;
+import kass.concurrente.candadosImpl.Filtro;
 
 /**
  * Clase abstracta que modela al inversionista.
@@ -23,12 +25,13 @@ public abstract class Inversionista implements Runnable {
     protected Integer id;
     protected Integer vecesComido = 0;
     // probando
-    protected Semaphore semaforo = new Semaphore(1);
+    //protected Semaphore semaforo = new Semaphore(1);
+    protected Semaphore semaforo;
 
     //?
     protected Inversionista(){
         this.vecesComido = 0;
-        this.id ++;
+        //this.id++;
     }
 
     @Override

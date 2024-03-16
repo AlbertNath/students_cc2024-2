@@ -17,8 +17,8 @@ public class PetersonLock implements Lock {
     @Override
     public void lock() {
         int i = Integer.parseInt(Thread.currentThread().getName());
-        int j = 1 - i;
-        flag[i] = true; // I'm interested
+        int j = 1 - (i % 2);
+        flag[i % 2] = true; // I'm interested
         victim = i; // you go first
         while (flag[j] && victim == i) {
             // wait

@@ -1,6 +1,8 @@
 package kass.concurrente.tenedor;
 
 import java.util.concurrent.Semaphore;
+import kass.concurrente.candadosImpl.PetersonLock;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Clase que implementa el tenedor
@@ -14,7 +16,8 @@ public class TenedorImpl implements Tenedor {
     private volatile Integer vecesTomado;
     private volatile boolean tomado;
     private Integer ID;
-    private Semaphore semaforo = new Semaphore(1);
+    //private Semaphore semaforo = new Semaphore(1);
+    private PetersonLock peterson = new PetersonLock();    
 
     public TenedorImpl(int id){
         this.ID = id;
@@ -24,12 +27,13 @@ public class TenedorImpl implements Tenedor {
 
     @Override
     public void tomar() {
-        try {
-            semaforo.acquire();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        try {
+//            semaforo.acquire();
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        peterson.lock();
         tomado = true;
         this.vecesTomado++;
         System.out.println("El tenedor " + this.ID + " ha sido tomado.");
@@ -38,7 +42,8 @@ public class TenedorImpl implements Tenedor {
 
     @Override
     public void soltar() {
-        semaforo.release();
+        //semaforo.release();
+        peterson.unlock();
         tomado = false;
         System.out.println("El tenedor " + this.ID + " ha sido soltado.");  
     }
