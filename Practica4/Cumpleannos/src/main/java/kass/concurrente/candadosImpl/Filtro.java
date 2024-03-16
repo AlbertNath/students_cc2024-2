@@ -16,7 +16,7 @@ public class Filtro implements Semaphore {
     private final int maxHilosConcurrentes;
     private int[] level;
     private int[] victim;
-    private int threadsInCritical = 0; // Contador de hilos en la sección crítica
+    private volatile int threadsInCritical = 0; // Contador de hilos en la sección crítica
     
 
     public Filtro(int hilos, int maxHilosConcurrentes) {
@@ -43,9 +43,7 @@ public class Filtro implements Semaphore {
             // Spin mientras existan conflictos
             while (hasConflict(me, i)) {};
         }
-        synchronized (this) {
-            threadsInCritical++; // Incrementa el contador de hilos en la sección crítica
-        }
+        threadsInCritical++; // Incrementa el contador de hilos en la sección crítica
         if (threadsInCritical < maxHilosConcurrentes){
             level[me] = 0 ; // Permite que entre otro hilo más 
         }
@@ -54,9 +52,9 @@ public class Filtro implements Semaphore {
     @Override
     public void release() {
         int me = Integer.parseInt(Thread.currentThread().getName());
-        synchronized (this) {
-            threadsInCritical--; // Decrementa el contador de hilos en la sección crítica
-        }
+        //synchronizedS (this) {
+        threadsInCritical--; // Decrementa el contador de hilos en la sección crítica
+        //}
         level[me] = 0;
     }
 
