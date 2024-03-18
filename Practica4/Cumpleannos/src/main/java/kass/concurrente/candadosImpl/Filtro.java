@@ -14,9 +14,10 @@ public class Filtro implements Semaphore {
 
     private final int hilos;
     private final int maxHilosConcurrentes;
-    private int[] level;
-    private int[] victim;
+    private volatile int[] level;
+    private volatile int[] victim;
     private volatile int threadsInCritical = 0; // Contador de hilos en la sección crítica
+    private  PetersonLock peterson = new PetersonLock();  
     
 
     public Filtro(int hilos, int maxHilosConcurrentes) {
@@ -38,33 +39,34 @@ public class Filtro implements Semaphore {
     public void acquire() {
         int me = Integer.parseInt(Thread.currentThread().getName());
         for (int i = 1; i < hilos; i++) { // Intenta adquirir el bloqueo en múltiples niveles simultáneamente
+            peterson.lock();
             level[me] = i;
             victim[i] = me;
-            // Spin mientras existan conflictos
-            while (hasConflict(me, i)) {};
+            peterson.unlock();
+        
+            //while (hasConflict(me, i)) {};
+            while((i!=me) && level[i]>=i && victim[i]==me){
+             
+            };
+            
         }
+        peterson.lock();
         threadsInCritical++; // Incrementa el contador de hilos en la sección crítica
         if (threadsInCritical < maxHilosConcurrentes){
             level[me] = 0 ; // Permite que entre otro hilo más 
         }
+        peterson.unlock();
     }
 
     @Override
     public void release() {
         int me = Integer.parseInt(Thread.currentThread().getName());
         //synchronizedS (this) {
+        peterson.lock();
         threadsInCritical--; // Decrementa el contador de hilos en la sección crítica
         //}
         level[me] = 0;
-    }
-
-    private boolean hasConflict(int me, int myLevel) {
-        for (int k = 0; k < level.length; k++) {
-            if (k != me && level[k] >= myLevel && victim[myLevel] == me) {
-                return true; // Existe un conflicto
-            }
-        }
-        return false; // No hay conflictos
+        peterson.unlock();
     }
 }
 
