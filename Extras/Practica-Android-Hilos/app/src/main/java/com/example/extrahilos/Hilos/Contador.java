@@ -6,9 +6,10 @@ public class Contador implements Runnable{
 
     @Override
     public void run(){
-        for(int i = 0; i < rondas; ++i){
-            ++contador;
-        }
+        //for(int i = 0; i < rondas; ++i){
+        //    contador++;
+        //}
+        this.contador();
     }
 
     public synchronized void contador(){
@@ -16,4 +17,9 @@ public class Contador implements Runnable{
             ++contador;
         }
     }
+
+    public int getContador() {
+        return this.contador;
+    }
+    public void resetContador() {this.contador = 0;}
 }
