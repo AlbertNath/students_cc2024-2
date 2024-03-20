@@ -43,8 +43,8 @@ public class TenedorImpl implements Tenedor {
     @Override
     public void soltar() {
         //semaforo.release();
-        peterson.unlock();
         tomado = false;
+        peterson.unlock();
         System.out.println("El tenedor " + this.ID + " ha sido soltado.");  
     }
 
