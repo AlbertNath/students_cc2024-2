@@ -16,8 +16,6 @@ public class Filtro implements Semaphore {
     private final int maxHilosConcurrentes;
     private volatile int[] level;
     private volatile int[] victim;
-    //private volatile int threadsInCritical = 0; // Contador de hilos en la sección crítica
-    //private  PetersonLock peterson = new PetersonLock();  
     
 
     public Filtro(int hilos, int maxHilosConcurrentes) {
@@ -39,34 +37,18 @@ public class Filtro implements Semaphore {
     public void acquire() {
         int me = Integer.parseInt(Thread.currentThread().getName());
         for (int i = 1; i < hilos; i++) { // Intenta adquirir el bloqueo en múltiples niveles simultáneamente
-            //peterson.lock();
             level[me] = i;
             victim[i] = me;
-            //peterson.unlock();
             
-            //while (hasConflict(me, i)) {};
-            while(hasConflict(me) && victim[i]==me){
-             
-            };
+            while(hasConflict(me) && victim[i]==me){};
             
         }
-        //peterson.lock();
-        //threadsInCritical++; // Incrementa el contador de hilos en la sección crítica
-        //if (threadsInCritical < maxHilosConcurrentes){
-        //    level[me] = 0 ; // Permite que entre otro hilo más 
-        //}
-        //peterson.unlock();
     }
 
     @Override
     public void release() {
         int me = Integer.parseInt(Thread.currentThread().getName());
-        //synchronizedS (this) {
-        //peterson.lock();
-        //threadsInCritical--; // Decrementa el contador de hilos en la sección crítica
-        //}
         level[me] = 0;
-        //peterson.unlock();
     }
 
     public boolean hasConflict(int me) {

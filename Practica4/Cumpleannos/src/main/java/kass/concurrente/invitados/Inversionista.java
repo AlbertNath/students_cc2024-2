@@ -1,11 +1,8 @@
 package kass.concurrente.invitados;
 
-//import java.util.concurrent.Semaphore;
 import kass.concurrente.candados.Semaphore;
 
 import kass.concurrente.tenedor.Tenedor;
-import kass.concurrente.tenedor.TenedorImpl;
-import kass.concurrente.candadosImpl.Filtro;
 
 /**
  * Clase abstracta que modela al inversionista.
@@ -17,21 +14,15 @@ import kass.concurrente.candadosImpl.Filtro;
  */
 public abstract class Inversionista implements Runnable {
 
-    // recibir tenedores?
-    //protected Tenedor t1 = new TenedorImpl(1);
-    //protected Tenedor t2 = new TenedorImpl(2);
     protected Tenedor t1;
     protected Tenedor t2;
     protected Integer id;
     protected Integer vecesComido = 0;
-    // probando
-    //protected Semaphore semaforo = new Semaphore(1);
     protected Semaphore semaforo;
 
     //?
     protected Inversionista(){
         this.vecesComido = 0;
-        //this.id++;
     }
 
     @Override
@@ -78,11 +69,9 @@ public abstract class Inversionista implements Runnable {
     public void come() throws InterruptedException{
         System.out.println("Inversionista " + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
-        //semaforo.acquire();
         this.tomaTenedores();
         this.vecesComido++;
         this.sueltaTenedores();
-        //semaforo.release();
         System.out.println("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 
