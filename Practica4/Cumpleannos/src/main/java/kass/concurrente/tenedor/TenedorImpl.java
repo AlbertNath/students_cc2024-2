@@ -7,14 +7,19 @@ import kass.concurrente.candadosImpl.PetersonLock;
  * Tenemos una variable entera que cuenta el numero de veces que fue tomado
  * Tiene una variable que simboliza su id
  * @version 1.1
- * @author <Su equipo>
+ * @author <PaoPatrol>
  */
 public class TenedorImpl implements Tenedor {
 
     private volatile Integer vecesTomado;
     private Integer ID;
-    private PetersonLock peterson = new PetersonLock();    
-
+    private PetersonLock peterson = new PetersonLock();  
+    
+    
+    /**
+     * Crear una instancia de TenedorImpl
+     * @param id --- Id int del Tenedor
+     */
     public TenedorImpl(int id){
         this.ID = id;
         this.vecesTomado = 0;

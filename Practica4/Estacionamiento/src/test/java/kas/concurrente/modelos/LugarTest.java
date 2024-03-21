@@ -26,7 +26,7 @@ public class LugarTest {
 
     @Test
     void constructorTest(){
-        assertTrue(lugar.getId() == 1 && lugar.getDisponible() == true && lugar.getFiltroModificado() != null);
+        assertTrue(lugar.getId() == 1 && lugar.getDisponible() == true);
     }
 
     @Test

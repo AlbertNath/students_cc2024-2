@@ -50,7 +50,9 @@ public abstract class Inversionista implements Runnable {
      * PRIMERO toma los tenedores.
      * DESPUES come.
      * FINALMENTE los suelta para que los demas los puedan usar.
-     * @throws InterruptedException <Escribe porque se lanzaria esta exception>
+     * @throws InterruptedException se lanzará si el hilo que ejecuta este método es interrumpido
+     * mientras está en espera, por ejemplo, si otro hilo llama al método interrupt() en el hilo 
+     * que ejecuta este método.
      */
     public void entraALaMesa() throws InterruptedException{
         tomaTenedores();
@@ -64,7 +66,9 @@ public abstract class Inversionista implements Runnable {
      * El inversionista le toma un par de milisegundos comer.
      * ESTA ES LA SECCION CRITICA, SIGNIFICA PELIGRO
      * Incrementa el numero de veces que ha comido.
-     * @throws InterruptedException <Escribe porque se lanzaria esta exception>
+     * @throws InterruptedException <se lanzará si el hilo que ejecuta este método es 
+     * interrumpido mientras está en espera, por ejemplo, si otro hilo llama al método
+     * interrupt() en el hilo que ejecuta este método.>
      */
     public void come() throws InterruptedException{
         System.out.println("Inversionista " + id + " está comiendo ñam ñam...");

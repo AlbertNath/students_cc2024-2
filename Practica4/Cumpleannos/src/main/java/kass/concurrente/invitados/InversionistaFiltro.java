@@ -15,6 +15,9 @@ public class InversionistaFiltro extends Inversionista {
 
     private Semaphore filtro;
 
+    /*
+     * Crea una instancia del InversionistaFiltro
+     */
     public InversionistaFiltro(Semaphore filtro){
         this.filtro = filtro;
     }

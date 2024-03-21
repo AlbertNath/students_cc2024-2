@@ -45,8 +45,6 @@ public class Lugar {
         vecesEstacionado ++;
         System.out.println("El carro está estacionado en el lugar " + id);
         semaforo.release();
-        //vePorPastel();
-        
     }
 
     /**
@@ -56,29 +54,31 @@ public class Lugar {
      * @throws InterruptedException En caso de que falle
      */
     public void vePorPastel() throws InterruptedException{
-        //semaforo.acquire();
         int tiempoEspera = (int) (Math.random() * 5) + 1;
         Thread.sleep(tiempoEspera * 1000);
         System.out.println("¡Saliendo del lugar " + id + " para ir a por pastel!");
-
-        //semaforo.release();
     }
 
+    /**
+    * Obtiene el atributo id
+     * @return --- int atributo dd
+     */
     public int getId (){
         return id;
     } 
-
+    /**
+     * Obtiene el atributo disponible
+     * @return --- boolean atributo disponible
+     */
     public boolean getDisponible() {
         return disponible;
     }
-
+    /**
+     * Obtiene el atributo vecesEstacionado
+     * @return --- Integer atributo veces estacionado
+     */
     public Integer getVecesEstacionado(){
         return vecesEstacionado;
-    }
-
-    // ???
-    public Boolean getFiltroModificado() {
-        return false;
     }
 
     

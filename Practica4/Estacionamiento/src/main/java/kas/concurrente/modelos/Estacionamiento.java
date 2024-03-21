@@ -20,18 +20,24 @@ public class Estacionamiento {
     public Estacionamiento(int pisos, int capacidadPiso){
         lugares = new Lugar[pisos][capacidadPiso];
         for (int i = 0; i < pisos; i++) {
-            //lugares[i] = new Lugar[capacidadPiso];
             for (int j = 0; j < capacidadPiso; j++) {
                 lugares[i][j] = new Lugar(i * capacidadPiso + j);                
             }
         }
         this.lugaresDisponibles = pisos * capacidadPiso;
     }
-
+    /**
+     * Obtiene el atributo de lugaresDisponibles
+     * @return --- int atributo lugaresDisponibles
+     */
     public int getLugaresDisponibles() {
         return lugaresDisponibles;
     }
 
+    /**
+     * Asigna un nuevo valor al atributo lugaresDisponible
+     * @param lugaresDisponibles --- int nuevo valor para el atributo
+     */
     public void setLugaresDisponibles(int lugaresDisponibles) {
         this.lugaresDisponibles = lugaresDisponibles;
     }
@@ -42,14 +48,6 @@ public class Estacionamiento {
      */
     public boolean estaLleno(){
         return lugaresDisponibles == 0;
-    }
-
-    /**
-     * Metodo que inicaliza los lugares del arreglo
-     * Este es un método optativo
-     */
-    public void inicializaLugares(){
-       
     }
 
     /**

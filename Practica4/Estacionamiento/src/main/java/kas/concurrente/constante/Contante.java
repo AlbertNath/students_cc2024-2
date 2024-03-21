@@ -13,4 +13,11 @@ public class Contante {
     public static final Integer CINCO_SEGUNDOS = 5000;
     public static final String ROJO = "";
     public static final String AZUL = "";
+
+    /*
+     * Crea una instancia de Contante
+     */
+    private Contante(){
+
+    }
 }

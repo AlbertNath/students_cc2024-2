@@ -1,5 +1,12 @@
 package kas.concurrente;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+import kas.concurrente.modelos.Estacionamiento;
+
+
 /**
  * Clase principal, la usaran para SUS pruebas
  * Pueden modigicar los valores estaticos para ver como funciona
@@ -10,6 +17,9 @@ package kas.concurrente;
  */
 public class Main implements Runnable{
 
+
+    private Estacionamiento estacionamiento;
+ 
     /**
      * Metodo constructor
      * Se inicializa el Semaforo Modificado con _______
@@ -33,24 +43,33 @@ public class Main implements Runnable{
      * @throws InterruptedException Por si explota su compu al ponerle medio millon de hilos xD
      */
     public static void main(String[] args) throws InterruptedException{
-        /**
-         * Aqui va su codigo
-         */
+        Main main = new Main(); // Paso 1: Crea el Objeto de tipo Main
+
+        // Paso 2: Crea una estructura de datos que contenga a nuestros hilos
+        List<Thread> hilos = new ArrayList<>();
+
+        // Paso 3: Genera con un ciclo, el cual inicialice un número igual de NUM_CARROS
+        final int NUM_CARROS = 10; // Número de carros a simular
+        for (int i = 0; i < NUM_CARROS; i++) {
+            Thread hilo = new Thread(main); // Crear un nuevo hilo
+            hilos.add(hilo); // Agregar el hilo a la lista de hilos
+            hilo.start(); // Iniciar el hilo
+        }
+
+        // Paso 4: Finalmente haz un Join a tus hilos
+        for (Thread hilo : hilos) {
+            hilo.join(); // Esperar a que todos los hilos terminen
+        }
     }
 
-    /**
-     * Aqui esta su primer seccion crítica
-     * Paso 1: Keep calm and ...
-     * Paso 2: Beware with the concurrent code
-     * Paso 3: Try to remember some basics of Java and POO
-     * Paso 4: Obten el ID de tu hilo
-     * Paso 5: TU CARRO (HILO) ENTRARA AL ESTACIONAMIENTO (Los Hilos simulan ser carros, 
-     * no es necesario que generes clase Carro (puedes hacerlo si quieres))
-     */
     @Override
-    public void run(){
-        /**
-         * AQUI VA tu codigo D:
-         */
+    public void run() {
+    try {
+        estacionamiento.entraCarro((int) Thread.currentThread().getId());
+    } catch (InterruptedException e) {
+        // Re-lanzar la excepción InterruptedException
+        Thread.currentThread().interrupt();
+        e.printStackTrace();
     }
+}
 }

@@ -17,7 +17,11 @@ public class Filtro implements Semaphore {
     private volatile int[] level;
     private volatile int[] victim;
     
-
+    /**
+     * Crea una instancia de filtro
+     * @param hilos ---- int número de hlos
+     * @param maxHilosConcurrentes --- int número de hilos en SC
+     */
     public Filtro(int hilos, int maxHilosConcurrentes) {
         this.hilos = hilos;
         this.maxHilosConcurrentes = maxHilosConcurrentes;
@@ -51,6 +55,12 @@ public class Filtro implements Semaphore {
         level[me] = 0;
     }
 
+    /**
+     * Tiene un conflicto el hilo que invoca al método que hace que tenga 
+     * que esperar su turno antes de entrar a SC
+     * @param me --- int Id del hilo
+     * @return ------- boolean true en caso de tenerlo false en caso contrario
+     */
     public boolean hasConflict(int me) {
         int count = 0; // Contador de hilos en la sección crítica
         for (int k = 0; k < hilos; k++) {
