@@ -4,6 +4,8 @@ import kass.concurrente.candados.Semaphore;
 
 import kass.concurrente.tenedor.Tenedor;
 
+import java.util.logging.Logger;
+
 /**
  * Clase abstracta que modela al inversionista.
  * El inversionista tiene 2 tenedores a sus lados.
@@ -19,8 +21,11 @@ public abstract class Inversionista implements Runnable {
     protected Integer id;
     protected Integer vecesComido = 0;
     protected Semaphore semaforo;
+    private static final Logger LOGGER = Logger.getLogger(Inversionista.class.getName());
 
-    //?
+    /**
+     * Constructor de Inversionista
+     */
     protected Inversionista(){
         this.vecesComido = 0;
     }
@@ -38,6 +43,7 @@ public abstract class Inversionista implements Runnable {
                 entraALaMesa();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
         
@@ -71,12 +77,12 @@ public abstract class Inversionista implements Runnable {
      * interrupt() en el hilo que ejecuta este método.>
      */
     public void come() throws InterruptedException{
-        System.out.println("Inversionista " + id + " está comiendo ñam ñam...");
+        LOGGER.info("Inversionista " + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
         this.tomaTenedores();
         this.vecesComido++;
         this.sueltaTenedores();
-        System.out.println("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
+        LOGGER.info("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 
     /**
@@ -86,9 +92,9 @@ public abstract class Inversionista implements Runnable {
      * @throws InterruptedException <Escribe porque se lanzaria esta exception>
      */
     public void piensa() throws InterruptedException {
-        System.out.println("Inversionista " + id + " está pensando...");
+        LOGGER.info("Inversionista " + id + " está pensando...");
         Thread.sleep(generaTiempoDeEspera());
-        System.out.println("Inversionista " + id + " ha terminado de pensar.");
+        LOGGER.info("Inversionista " + id + " ha terminado de pensar.");
     }
 
     /**
@@ -112,8 +118,8 @@ public abstract class Inversionista implements Runnable {
     private long generaTiempoDeEspera(){
         double i=Math.random()*10.0;
         return (long)i ;
+        
     }
-
     /**
      * Metodo que obtiene el ID del inversionista
      * @return El ID del inversionista

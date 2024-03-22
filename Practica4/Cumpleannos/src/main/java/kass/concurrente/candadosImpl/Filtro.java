@@ -4,9 +4,6 @@ import kass.concurrente.candados.Semaphore;
 
 /**
  * Clase que modela el Algoritmo del Filtro Modificado
- * Este algoritmo es similar al del filtro, lo diferente es que
- * permite una cantidad m de hilos SIMULTANEOS en la seccion critica
- * Todo es casi igual, solo realiza la modificacion pertinente para esto
  * @version 1.0
  * @author Kassandra Mirael
  */

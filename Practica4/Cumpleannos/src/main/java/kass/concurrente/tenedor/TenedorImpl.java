@@ -2,6 +2,8 @@ package kass.concurrente.tenedor;
 
 import kass.concurrente.candadosImpl.PetersonLock;
 
+import java.util.logging.Logger;
+
 /**
  * Clase que implementa el tenedor
  * Tenemos una variable entera que cuenta el numero de veces que fue tomado
@@ -12,16 +14,17 @@ import kass.concurrente.candadosImpl.PetersonLock;
 public class TenedorImpl implements Tenedor {
 
     private volatile Integer vecesTomado;
-    private Integer ID;
-    private PetersonLock peterson = new PetersonLock();  
-    
-    
+    private Integer id;
+    private static PetersonLock peterson = new PetersonLock(); 
+    private static final Logger LOGGER = Logger.getLogger(TenedorImpl.class.getName());
+
+
     /**
      * Crear una instancia de TenedorImpl
      * @param id --- Id int del Tenedor
      */
     public TenedorImpl(int id){
-        this.ID = id;
+        this.id = id;
         this.vecesTomado = 0;
     }
 
@@ -29,19 +32,18 @@ public class TenedorImpl implements Tenedor {
     public void tomar() {
         peterson.lock();
         this.vecesTomado++;
-        System.out.println("El tenedor " + this.ID + " ha sido tomado.");
-
-    }
+        LOGGER.info(String.format("El tenedor %d ha sido tomado.", this.id));
+        peterson.unlock();
+    } 
 
     @Override
     public void soltar() {
-        peterson.unlock();
-        System.out.println("El tenedor " + this.ID + " ha sido soltado.");  
+        LOGGER.info(String.format("El tenedor %d ha sido soltado.", this.id));
     }
 
     @Override
     public int getId() {
-        return ID;
+        return id;
         
     }
 
@@ -53,7 +55,7 @@ public class TenedorImpl implements Tenedor {
 
     @Override
     public void setId(int id) {
-        this.ID = id ;
+        this.id = id ;
         
     }
 
