@@ -32,19 +32,18 @@ public class TenedorImpl implements Tenedor {
     public void tomar() {
         peterson.lock();
         this.vecesTomado++;
-        LOGGER.info(String.format("El tenedor %d ha sido tomado.", this.id));
-        peterson.unlock();
+        LOGGER.info(String.format("El tenedor %d ha sido soltado{0}.", this.id));
     } 
 
     @Override
     public void soltar() {
         LOGGER.info(String.format("El tenedor %d ha sido soltado.", this.id));
+        peterson.unlock();
     }
 
     @Override
     public int getId() {
         return id;
-        
     }
 
     @Override

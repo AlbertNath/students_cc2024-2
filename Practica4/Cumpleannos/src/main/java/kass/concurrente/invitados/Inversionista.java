@@ -37,7 +37,7 @@ public abstract class Inversionista implements Runnable {
          * puesto en el test, agrega el valor aqui.
          */
 
-         for (int i = 0; i < 5; i++) {
+         for (int i = 0; i < 500; i++) {
             try {
                 piensa();
                 entraALaMesa();
