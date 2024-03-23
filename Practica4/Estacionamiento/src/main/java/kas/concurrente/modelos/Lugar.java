@@ -49,7 +49,7 @@ public class Lugar {
         disponible = false;
         vecesEstacionado ++;
         semaforo.release();
-        //vePorPastel();
+        vePorPastel();
         logger.info(Contante.ROJO + "¡Saliendo del lugar " + id);
     }
 
