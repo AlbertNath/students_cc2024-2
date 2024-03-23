@@ -61,7 +61,9 @@ public abstract class Inversionista implements Runnable {
      * que ejecuta este método.
      */
     public void entraALaMesa() throws InterruptedException{
+        tomaTenedores();
         come();
+        sueltaTenedores();
     }
 
     /**
@@ -77,9 +79,7 @@ public abstract class Inversionista implements Runnable {
     public void come() throws InterruptedException{
         LOGGER.info("Inversionista " + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
-        this.tomaTenedores();
         this.vecesComido++;
-        this.sueltaTenedores();
         LOGGER.info("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 

@@ -2,8 +2,6 @@ package kas.concurrente;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
 import kas.concurrente.modelos.Estacionamiento;
 
 
@@ -18,7 +16,6 @@ import kas.concurrente.modelos.Estacionamiento;
 public class Main implements Runnable{
 
     private Estacionamiento estacionamiento;
-    final Logger logger = Logger.getLogger(Main.class.getName());
     /**
      * Metodo constructor
      * Se inicializa el Semaforo Modificado con NUM_CARROS
@@ -64,7 +61,6 @@ public class Main implements Runnable{
     try {
         estacionamiento.entraCarro((int) Thread.currentThread().getId());
     } catch (InterruptedException e) {
-        // Re-lanzar la excepción InterruptedException
         Thread.currentThread().interrupt();
         e.printStackTrace();
     }
