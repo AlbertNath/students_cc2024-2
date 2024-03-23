@@ -1,5 +1,9 @@
 package kas.concurrente.modelos;
 
+import java.util.logging.Logger;
+
+import kas.concurrente.constante.Contante;
+
 /**
  * En esta clase se simula el estacionamiento en si
  * Posee un conjunto de arreglos de tipo Lugar (o arreglo bidimensional?)
@@ -11,6 +15,8 @@ public class Estacionamiento {
 
     private Lugar[][] lugares;
     private volatile int lugaresDisponibles;
+    final Logger logger = Logger.getLogger(Estacionamiento.class.getName());
+
 
     /**
      * Metodo constructor
@@ -57,10 +63,8 @@ public class Estacionamiento {
      * @throws InterruptedException Si llega a fallar
      */
     public void entraCarro(int nombre) throws InterruptedException{
-        int lugar = obtenLugar();
-        asignaLugar(lugar);
-        System.out.println("El carro " + nombre + " ha entrado al estacionamiento");
-       
+        logger.info(Contante.AZUL + "El carro " + nombre + " ha entrado al estacionamiento");
+        asignaLugar(obtenLugar());
     }
 
     /**

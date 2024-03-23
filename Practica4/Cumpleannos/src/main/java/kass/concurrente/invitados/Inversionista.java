@@ -42,7 +42,7 @@ public abstract class Inversionista implements Runnable {
                 piensa();
                 entraALaMesa();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
         }
@@ -61,9 +61,7 @@ public abstract class Inversionista implements Runnable {
      * que ejecuta este método.
      */
     public void entraALaMesa() throws InterruptedException{
-        tomaTenedores();
         come();
-        sueltaTenedores();
     }
 
     /**

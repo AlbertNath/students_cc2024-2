@@ -1,6 +1,9 @@
 package kas.concurrente.modelos;
 
 import java.util.concurrent.Semaphore;
+import java.util.logging.Logger;
+
+import kas.concurrente.constante.Contante;
 
 /**
  * Clase que modela un Lugar
@@ -15,6 +18,8 @@ public class Lugar {
     private boolean disponible;
     private Semaphore semaforo;
     private Integer vecesEstacionado;
+    final Logger logger = Logger.getLogger(Lugar.class.getName());
+
 
     /**
      * Metodo constructor
@@ -43,8 +48,9 @@ public class Lugar {
         semaforo.acquire();
         disponible = false;
         vecesEstacionado ++;
-        System.out.println("El carro está estacionado en el lugar " + id);
         semaforo.release();
+        //vePorPastel();
+        logger.info(Contante.ROJO + "¡Saliendo del lugar " + id);
     }
 
     /**
@@ -56,7 +62,6 @@ public class Lugar {
     public void vePorPastel() throws InterruptedException{
         int tiempoEspera = (int) (Math.random() * 5) + 1;
         Thread.sleep(tiempoEspera * 1000);
-        System.out.println("¡Saliendo del lugar " + id + " para ir a por pastel!");
     }
 
     /**

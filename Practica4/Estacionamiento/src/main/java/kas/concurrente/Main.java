@@ -2,7 +2,7 @@ package kas.concurrente;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 import kas.concurrente.modelos.Estacionamiento;
 
@@ -17,18 +17,15 @@ import kas.concurrente.modelos.Estacionamiento;
  */
 public class Main implements Runnable{
 
-
     private Estacionamiento estacionamiento;
- 
+    final Logger logger = Logger.getLogger(Main.class.getName());
     /**
      * Metodo constructor
-     * Se inicializa el Semaforo Modificado con _______
-     * Se inicaliza el Estacionamiento con _______
+     * Se inicializa el Semaforo Modificado con NUM_CARROS
+     * Se inicaliza el Estacionamiento con 4 pisos y 50 lugares por piso
      */
     public Main(){
-        /**
-         * Aqui va tu codigo
-         */
+        estacionamiento = new Estacionamiento(4, 50);
     }
 
     /**
@@ -49,7 +46,7 @@ public class Main implements Runnable{
         List<Thread> hilos = new ArrayList<>();
 
         // Paso 3: Genera con un ciclo, el cual inicialice un número igual de NUM_CARROS
-        final int NUM_CARROS = 10; // Número de carros a simular
+        final int NUM_CARROS = 500; // Número de carros a simular
         for (int i = 0; i < NUM_CARROS; i++) {
             Thread hilo = new Thread(main); // Crear un nuevo hilo
             hilos.add(hilo); // Agregar el hilo a la lista de hilos
