@@ -1,5 +1,6 @@
 package kas.concurrente.modelos;
 
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
@@ -19,6 +20,7 @@ public class Lugar {
     private Semaphore semaforo;
     private Integer vecesEstacionado;
     final Logger logger = Logger.getLogger(Lugar.class.getName());
+    Random random = new Random();
 
 
     /**
@@ -59,9 +61,9 @@ public class Lugar {
      * Es pseudo aleatorio
      * @throws InterruptedException En caso de que falle
      */
-    public void vePorPastel() throws InterruptedException{
-        int tiempoEspera = (int) (Math.random() * 5) + 1;
-        Thread.sleep(tiempoEspera * 1000);
+    public void vePorPastel() throws InterruptedException {
+        int tiempoEspera = random.nextInt(5) + 1; // Genera un número aleatorio entre 1 y 5
+        Thread.sleep((long) tiempoEspera * 1000); // Convierte el tiempo de espera a milisegundos
     }
 
     /**

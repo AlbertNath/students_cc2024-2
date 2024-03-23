@@ -1,5 +1,6 @@
 package kas.concurrente.modelos;
 
+import java.util.Random;
 import java.util.logging.Logger;
 
 import kas.concurrente.constante.Contante;
@@ -16,6 +17,7 @@ public class Estacionamiento {
     private Lugar[][] lugares;
     private volatile int lugaresDisponibles;
     final Logger logger = Logger.getLogger(Estacionamiento.class.getName());
+    Random random = new Random();
 
 
     /**
@@ -86,8 +88,9 @@ public class Estacionamiento {
      * repaso, quiero que expliquen porque lo pedimos en forma pseudoAleatoria
      * @return Retorna el indice del lugar
      */
-    public int obtenLugar(){
-        return (int) (Math.random() * (lugares.length * lugares[0].length));
+    public int obtenLugar() {
+    int maximo = lugares.length * lugares[0].length;
+    return random.nextInt(maximo);
     }
 
     public Lugar [][] getLugares(){

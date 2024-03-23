@@ -42,7 +42,6 @@ public abstract class Inversionista implements Runnable {
                 piensa();
                 entraALaMesa();
             } catch (InterruptedException e) {
-                //e.printStackTrace();
                 Thread.currentThread().interrupt();
             }
         }
@@ -77,10 +76,11 @@ public abstract class Inversionista implements Runnable {
      * interrupt() en el hilo que ejecuta este método.>
      */
     public void come() throws InterruptedException{
-        LOGGER.info("Inversionista " + id + " está comiendo ñam ñam...");
+        String inversionista = "Inversionista";
+        LOGGER.info(inversionista + id + " está comiendo ñam ñam...");
         Thread.sleep(generaTiempoDeEspera());
         this.vecesComido++;
-        LOGGER.info("Inversionista " + id + " ha comido. Total de veces comidas: " + vecesComido);
+        LOGGER.info(inversionista + id + " ha comido. Total de veces comidas: " + vecesComido);
     }
 
     /**
