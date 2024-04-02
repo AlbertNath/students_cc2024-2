@@ -1,6 +1,5 @@
 package kas.concurrente;
 
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BackoffLock implements Lock {
@@ -10,15 +9,18 @@ public class BackoffLock implements Lock {
 
     @Override
     public void lock() {
-        // backoff??
+        Backoff backoff = new Backoff(MIN_DELAY, MAX_DELAY);
         while (true) {
             while (state.get());
             if (!state.getAndSet(true)){
                 return;
             } else {
-                //backoff
+                try {
+                    backoff.backoff();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
         }
     }
 
