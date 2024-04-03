@@ -1,9 +1,23 @@
 package kas.concurrente;
 
 import java.util.concurrent.atomic.AtomicReference;
-import kas.concurrente.QNode;
-
 public class CLHLock implements Lock {
+    public class QNode {
+        public volatile boolean locked;
+
+        public QNode() {
+            this.locked = false;
+        }
+
+        public boolean get() { 
+            return this.locked;
+        }
+
+        public void set(boolean v) {
+            this.locked = v;
+        }
+    }
+
     AtomicReference<QNode> tail;
     ThreadLocal<QNode> myPred;
     ThreadLocal<QNode> myNode;
@@ -28,13 +42,13 @@ public class CLHLock implements Lock {
         qnode.set(true);
         QNode pred = tail.getAndSet(qnode);
         myPred.set(pred);
-        while (pred.get());
+        while (pred.locked);
     }
 
     @Override
     public void unlock() {
         QNode qnode = myNode.get();
-        qnode.set(false);
+        qnode.locked = false;
         myNode.set(myPred.get());
     }
     
