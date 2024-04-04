@@ -3,11 +3,11 @@ package kas.concurrente;
 import java.util.concurrent.atomic.AtomicReference;
 public class CLHLock implements Lock {
     public class QNode {
-        public volatile boolean locked;
+        public volatile boolean locked = false;
 
-        public QNode() {
-            this.locked = false;
-        }
+        //public QNode() {
+        //    this.locked = false;
+        //}
 
         public boolean get() { 
             return this.locked;
@@ -23,7 +23,7 @@ public class CLHLock implements Lock {
     ThreadLocal<QNode> myNode;
 
     public CLHLock() {
-        tail = new AtomicReference<>();
+        tail = new AtomicReference<>(new QNode());
         myNode = new ThreadLocal<QNode>() {
             protected QNode initialValue() {
                 return new QNode();
@@ -38,11 +38,11 @@ public class CLHLock implements Lock {
 
     @Override
     public void lock() {
-        QNode qnode = myNode.get();
+        QNode qnode = myNode.get(); 
         qnode.locked = true;
         QNode pred = tail.getAndSet(qnode);
         myPred.set(pred);
-        while (pred.locked);
+        while (pred.locked){Thread.currentThread().yield();}
     }
 
     @Override
