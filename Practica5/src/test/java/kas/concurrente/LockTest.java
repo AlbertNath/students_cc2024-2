@@ -50,10 +50,10 @@ public class LockTest {
         }
     }   
  
-
+    
     @Test
-    void clhLock() throws InterruptedException {
-        ejecutaPrueba(new CLHLock());
+    void mcsLock() throws InterruptedException {
+        ejecutaPrueba(new MCSLock());
     }
     /* 
     @Test
@@ -66,17 +66,16 @@ public class LockTest {
     void ttasLock() throws InterruptedException {
         ejecutaPrueba(new TTASLock());
     }
-
+    
+    
+    @Test
+    void clhLock() throws InterruptedException {
+        ejecutaPrueba(new CLHLock());
+    }
     
     @Test
     void backoffLock() throws InterruptedException {
         ejecutaPrueba(new BackoffLock());
-    }
-    
-    
-    @Test
-    void mcsLock() throws InterruptedException {
-        ejecutaPrueba(new MCSLock());
     }
     
     @Test
