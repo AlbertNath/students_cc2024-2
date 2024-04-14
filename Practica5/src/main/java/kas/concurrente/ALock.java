@@ -2,6 +2,12 @@ package kas.concurrente;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * Implementacion del candado ALock
+ * @version 1.0
+ * @author PaoPaotrol
+ */
 public class ALock implements Lock{
     ThreadLocal<Integer> mySlotIndex = new ThreadLocal<Integer>(){
         @Override
@@ -13,6 +19,10 @@ public class ALock implements Lock{
     volatile boolean[] flag;
     int size;
 
+    /**
+     * Instancia del candado ALock
+     * @param hilos -- int numero de hilos
+     */
     public ALock(int hilos){
         size = hilos;
         tail = new AtomicInteger(0);

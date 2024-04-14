@@ -2,6 +2,14 @@ package kas.concurrente;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * Implementación de un candado (lock) utilizando el algoritmo de backoff.
+ * Este candado está diseñado para manejar situaciones de contención en acceso concurrente
+ * mediante un mecanismo de espera exponencial.
+ * 
+ * @author PaoPaotrol
+ * @version 1.0
+ */
 public class BackoffLock implements Lock {
     private AtomicBoolean state = new AtomicBoolean(false);
     private static final int MIN_DELAY = 1;
