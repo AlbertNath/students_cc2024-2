@@ -30,8 +30,28 @@ public class WFSnapshot<T> implements Snapshot<T> {
 
     @Override
     public T[] scan() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'scan'");
-    }
-    
+        StampedSnap<T>[] oldCopy;
+        StampedSnap<T>[] newCopy;
+        boolean[] moved = new boolean[aTable.length];
+        oldCopy = collect();
+        collect: while (true) {
+            newCopy = collect();
+            for (int i = 0; i < aTable.length; i++) {
+                if(oldCopy[i].stamp != newCopy[i].stamp) {
+                    if(moved[i])
+                        return oldCopy[i].snap;
+                    else {
+                        moved[i] = true;
+                        oldCopy = newCopy;
+                        continue collect;
+                    }
+                }
+            }
+            T[] result = (T[]) new Object[aTable.length];
+            for(int i = 0; i < aTable.length; i++)
+                result[i] = newCopy[i].value;
+
+            return result;
+        }
+    }    
 }
