@@ -66,7 +66,7 @@ public class Util {
         }        
     }
 
-    public static void creaCarpeta(Directory dir) {
+    public static void mkdir(Directory dir) {
         try {
             Path path = Paths.get(dir.path);
             Files.createDirectory(path);
