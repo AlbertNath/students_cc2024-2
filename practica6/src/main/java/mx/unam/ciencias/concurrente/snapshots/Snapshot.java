@@ -5,6 +5,6 @@ package mx.unam.ciencias.concurrente.snapshots;
  * @version 1.0
  */
 public interface Snapshot<T> {
-    public void update(T v);
-    public T[] scan();
+    public abstract void update(T v);
+    public abstract T[] scan();
 }

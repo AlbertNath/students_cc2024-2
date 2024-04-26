@@ -2,10 +2,12 @@ package mx.unam.ciencias.concurrente.snapshotsImpl;
 
 import java.util.Arrays;
 
+import mx.unam.ciencias.concurrente.snapshots.Memento;
 import mx.unam.ciencias.concurrente.snapshots.Snapshot;
 import mx.unam.ciencias.concurrente.stamped.StampedSnap;
 
 public class WFSnapshot<T> implements Snapshot<T> {
+
     private StampedSnap<T>[] aTable;
 
     public WFSnapshot(int capacity, T init) {
@@ -54,4 +56,17 @@ public class WFSnapshot<T> implements Snapshot<T> {
             return result;
         }
     }    
+
+    public Memento<T>[] save() {
+        Memento<T>[] mementos = new Memento[aTable.length];
+        for (int i = 0; i < aTable.length; i++)
+            mementos[i] = new Memento<>(aTable[i].snap);
+        return mementos;
+    }
+
+    public void restore(Memento<T>[] mementos) {
+        for (int i = 0; i < aTable.length; i++) {
+            aTable[i].snap = (T[]) Arrays.copyOf(mementos[i].getState(), mementos[i].getState().length);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package main.java.mx.unam.ciencias.concurrente.stamped;
+package mx.unam.ciencias.concurrente.stamped;
 
 public class StampedValue<T> {
     public long stamp;
